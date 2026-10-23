@@ -58,14 +58,33 @@ function nowParis() {
   const jour = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6, Sun: 7 }[p.weekday];
   return { jour, min: Number(p.hour) * 60 + Number(p.minute) };
 }
+// ---------- Jours fériés nationaux (France) : tout est fermé ----------
+function paques(y) {
+  const a = y % 19, b = Math.floor(y / 100), c = y % 100, d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3);
+  const h = (19 * a + b - d - g + 15) % 30, i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451);
+  const mois = Math.floor((h + l - 7 * m + 114) / 31), jour = ((h + l - 7 * m + 114) % 31) + 1;
+  return Date.UTC(y, mois - 1, jour, 12);
+}
+function ferie(dt) { // dt : date à midi UTC
+  const fixes = { "1-1": "Jour de l'an", "5-1": "Fête du travail", "5-8": "Victoire 1945", "7-14": "Fête nationale", "8-15": "Assomption", "11-1": "Toussaint", "11-11": "Armistice", "12-25": "Noël" };
+  const md = `${dt.getUTCMonth() + 1}-${dt.getUTCDate()}`;
+  if (fixes[md]) return fixes[md];
+  const ecart = Math.round((dt.getTime() - paques(dt.getUTCFullYear())) / 86400000);
+  return { 1: "Lundi de Pâques", 39: "Ascension", 50: "Lundi de Pentecôte" }[ecart] || null;
+}
+function dateParis(k = 0) { // date de Paris (+k jours), à midi UTC
+  const p = Object.fromEntries(new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Paris", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date()).map(x => [x.type, x.value]));
+  return new Date(Date.UTC(+p.year, +p.month - 1, +p.day + k, 12));
+}
+
 // ---------- Créneaux de rappel (jamais le week-end, uniquement aux horaires de la personne) ----------
 const fmtH = m => { const h = Math.floor(m / 60), mi = m % 60; return mi ? `${h} h ${String(mi).padStart(2, "0")}` : `${h} h`; };
 function prochainsCreneaux(j, n = 4) {
   const { min } = nowParis();
-  const p = Object.fromEntries(new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Paris", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date()).map(x => [x.type, x.value]));
   const out = [];
   for (let k = 0; k < 14 && out.length < n; k++) {
-    const dt = new Date(Date.UTC(+p.year, +p.month - 1, +p.day + k, 12));
+    const dt = dateParis(k);
+    if (ferie(dt)) continue;
     const wd = ((dt.getUTCDay() + 6) % 7) + 1;
     const date = new Intl.DateTimeFormat("fr-FR", { timeZone: "UTC", weekday: "long", day: "numeric", month: "long" }).format(dt);
     for (const [a, b] of (j[wd] || [])) {
@@ -84,6 +103,8 @@ function creneauxNote() {
 }
 function centresNote() {
   const { jour, min } = nowParis();
+  const fj = ferie(dateParis(0));
+  if (fj) return `\nAujourd'hui est un jour férié (${fj}) : tout est fermé, personne n'est joignable par téléphone. Propose un rappel ou une réservation.\nCentres ouverts à cet instant : aucun.`;
   const ouverts = [], fermes = [];
   for (const c of CENTRES) ((c.j[jour] || []).some(([a, b]) => min >= a && min < b) ? ouverts : fermes).push(`${c.nom} (${c.tel})`);
   return `\nCentres ouverts à cet instant : ${ouverts.length ? ouverts.join(", ") : "aucun"}.\nCentres fermés à cet instant : ${fermes.length ? fermes.join(", ") : "aucun"}.`;
