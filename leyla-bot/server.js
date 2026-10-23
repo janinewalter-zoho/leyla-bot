@@ -43,12 +43,14 @@ const SYSTEM_PROMPT = fs.readFileSync(path.join(__dirname, "prompt.md"), "utf8")
 // ---------- Horaires des centres (pour « Appeler maintenant ») ----------
 // jours : 1 = lundi … 5 = vendredi ; plages en minutes depuis minuit. Jours fériés non gérés.
 const H = (h, m = 0) => h * 60 + m;
+// Le 06 85 38 81 09 est le numéro de Lucile : on applique ses horaires (agenda Google, 23/10/2026).
+const HORAIRES_LUCILE = { 1: [[H(10), H(12)], [H(13), H(18)]], 2: [[H(9), H(12)], [H(14, 30), H(18)]], 3: [[H(9, 30), H(12)]], 4: [[H(9), H(12)], [H(14, 30), H(18)]], 5: [[H(9), H(12)], [H(13), H(15, 30)]] };
 const CENTRES = [
-  { nom: "Lucile, conseillère formation (entreprises, 100 % en ligne, hors zone des centres)", tel: "06 85 38 81 09", j: { 1: [[H(10), H(18)]], 2: [[H(10), H(18)]], 3: [[H(10), H(18)]], 4: [[H(10), H(18)]], 5: [[H(10), H(18)]] } },
+  { nom: "Lucile, conseillère formation (entreprises, 100 % en ligne, hors zone des centres)", tel: "06 85 38 81 09", j: HORAIRES_LUCILE },
   { nom: "L'Isle-sur-la-Sorgue", tel: "04 90 26 36 81", j: { 1: [[H(9), H(13)], [H(14), H(17)]], 2: [[H(9), H(13)], [H(14), H(19)]], 3: [[H(9), H(13)], [H(14), H(17)]], 4: [[H(9), H(13)], [H(14), H(17)]], 5: [[H(9), H(13)], [H(14), H(17)]] } },
   { nom: "Saint-Rémy-de-Provence (siège)", tel: "04 32 61 11 01", j: { 1: [[H(9), H(13)], [H(13, 45), H(17, 30)]], 2: [[H(9), H(13)], [H(13, 45), H(17, 30)]], 3: [[H(9), H(13)], [H(13, 45), H(17, 30)]], 4: [[H(9), H(13)], [H(13, 45), H(17, 30)]], 5: [[H(9), H(12)]] } },
-  { nom: "Sophia Antipolis", tel: "06 85 38 81 09", j: { 1: [[H(9), H(18)]], 2: [[H(9), H(18)]], 4: [[H(9), H(18)]], 5: [[H(9), H(16)]] } },
-  { nom: "Paris 11e", tel: "06 85 38 81 09", j: { 1: [[H(10), H(18)]], 2: [[H(10), H(18)]], 3: [[H(10), H(18)]], 4: [[H(10), H(18)]], 5: [[H(10), H(18)]] } },
+  { nom: "Sophia Antipolis", tel: "06 85 38 81 09", j: HORAIRES_LUCILE },
+  { nom: "Paris 11e", tel: "06 85 38 81 09", j: HORAIRES_LUCILE },
 ];
 function nowParis() {
   const p = Object.fromEntries(new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Paris", weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(new Date()).map(x => [x.type, x.value]));
