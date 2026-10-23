@@ -137,7 +137,7 @@ async function handleSalesIQ(body, rawBody, signature) {
       if (session.messages.length === 0) session.messages.push({ role: "assistant", content: WELCOME });
       const { action, reply, suggestions } = await askLeyla(session, text, visitor);
       console.log(`[${sessionId}] ${action} ${Date.now() - started}ms`);
-      if (action === "forward") { pushLead(session, visitor); return { status: 200, json: siqForward(reply) }; }
+      if (action === "forward") { pushLead(session, visitor); return { status: 200, json: siqReply(reply, suggestions) }; } // pas de transfert en direct : on reste sur une réponse
       if (action === "end") { pushLead(session, visitor); sessions.delete(sessionId); return { status: 200, json: siqEnd(reply) }; }
       return { status: 200, json: siqReply(reply, suggestions) };
     }
