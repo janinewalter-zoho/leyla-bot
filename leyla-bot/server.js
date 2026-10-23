@@ -16,6 +16,7 @@ const PORT = Number(process.env.PORT || 3000);
 const API_KEY = process.env.ANTHROPIC_API_KEY;
 const MODEL = process.env.CLAUDE_MODEL || "claude-haiku-5-5"; // rapide : budget 5 s SalesIQ
 const BOOKING_URL = process.env.BOOKING_URL || "https://english4french.com/rendez-vous-conseilleres-formation";
+const BOOKING_URL_ISLE = process.env.BOOKING_URL_ISLE || "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1afbfwpzbOZDsHUvGYYj2exb3EdJQlvE4U-Y1p3VgNZ35nJxUphjwRfyBHnPw6rma4Q4VIE_YY"; // Alexandra, centre de L'Isle-sur-la-Sorgue (particuliers)
 const TEST_URL = process.env.TEST_URL || "https://english4french.typeform.com/BannieresiteE4F";
 const FORWARD_OPERATORS = (process.env.FORWARD_OPERATORS || "").split(",").map(s => s.trim()).filter(Boolean);
 const SIQ_PUBLIC_KEY = process.env.SIQ_PUBLIC_KEY || "";   // clé publique « Secure your webhook » (optionnel)
@@ -68,7 +69,8 @@ function parseModelOutput(text) {
     else if (/^ACTION\s*:\s*END/i.test(t)) action = "end";
     else kept.push(line);
   }
-  return { action, reply: kept.join("\n").trim() || "Je vous écoute.", suggestions };
+  const reply = (kept.join("\n").trim() || "Je vous écoute.").replaceAll("[RDV_ALEXANDRA]", BOOKING_URL_ISLE);
+  return { action, reply, suggestions };
 }
 
 // ---------- Appel au modèle (API Messages, fetch natif) ----------
@@ -88,7 +90,7 @@ async function askLeyla(session, userText, visitor) {
       signal: controller.signal,
       headers: { "content-type": "application/json", "x-api-key": API_KEY, "anthropic-version": "2023-06-01" },
       body: JSON.stringify({
-        model: MODEL, max_tokens: 300,
+        model: MODEL, max_tokens: 450,
         system: SYSTEM_PROMPT + visitorNote,
         messages: session.messages,
       }),
