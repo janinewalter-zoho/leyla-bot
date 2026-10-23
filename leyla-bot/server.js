@@ -20,6 +20,7 @@ const BOOKING_URL_ISLE = process.env.BOOKING_URL_ISLE || "https://calendar.googl
 const TEST_URL = process.env.TEST_URL || "https://english4french.typeform.com/BannieresiteE4F";
 const FORWARD_OPERATORS = (process.env.FORWARD_OPERATORS || "").split(",").map(s => s.trim()).filter(Boolean);
 const SIQ_PUBLIC_KEY = process.env.SIQ_PUBLIC_KEY || "";   // clé publique « Secure your webhook » (optionnel)
+const CALLBACK_URL = process.env.CALLBACK_URL || ""; // fonction CRM leyla_rappel (clé API) : demandes de rappel
 const LEAD_WEBHOOK_URL = process.env.LEAD_WEBHOOK_URL || ""; // Zoho Flow / CRM : reçoit le profil en fin de chat (optionnel)
 const MODEL_TIMEOUT_MS = Number(process.env.MODEL_TIMEOUT_MS || 4200);
 const MAX_TURNS = 24;
@@ -60,17 +61,18 @@ function verifySignature(rawBody, signature) {
 
 // ---------- Analyse de la réponse du modèle ----------
 function parseModelOutput(text) {
-  let action = "reply", suggestions = [];
+  let action = "reply", suggestions = [], callback = null;
   const kept = [];
   for (const line of text.trim().split("\n")) {
     const t = line.trim();
     if (/^SUGGESTIONS\s*:/i.test(t)) suggestions = t.replace(/^SUGGESTIONS\s*:/i, "").split("|").map(s => s.trim()).filter(Boolean).slice(0, 3);
+    else if (/^RAPPEL\s*:/i.test(t)) { try { callback = JSON.parse(t.replace(/^RAPPEL\s*:/i, "").trim().replace(/^`|`$/g, "")); } catch (e) { console.error("RAPPEL JSON invalide", e.message); } }
     else if (/^ACTION\s*:\s*FORWARD/i.test(t)) action = "forward";
     else if (/^ACTION\s*:\s*END/i.test(t)) action = "end";
     else kept.push(line);
   }
   const reply = (kept.join("\n").trim() || "Je vous écoute.").replaceAll("[RDV_ALEXANDRA]", BOOKING_URL_ISLE);
-  return { action, reply, suggestions };
+  return { action, reply, suggestions, callback };
 }
 
 // ---------- Appel au modèle (API Messages, fetch natif) ----------
@@ -81,6 +83,7 @@ async function askLeyla(session, userText, visitor) {
   const ctx = {};
   for (const k of ["name", "email", "phone", "current_page", "city"]) if (visitor && visitor[k]) ctx[k] = visitor[k];
   const visitorNote = Object.keys(ctx).length ? `\n\n# Contexte visiteur (SalesIQ)\n${JSON.stringify(ctx)}` : "";
+  const nowNote = `\n\n# Date et heure actuelles\n${new Intl.DateTimeFormat("fr-FR", { timeZone: "Europe/Paris", dateStyle: "full", timeStyle: "short" }).format(new Date())} (heure de Paris)`;
 
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), MODEL_TIMEOUT_MS);
@@ -91,7 +94,7 @@ async function askLeyla(session, userText, visitor) {
       headers: { "content-type": "application/json", "x-api-key": API_KEY, "anthropic-version": "2023-06-01" },
       body: JSON.stringify({
         model: MODEL, max_tokens: 2000, output_config: { effort: "low" }, // la réflexion compte dans max_tokens
-        system: SYSTEM_PROMPT + visitorNote,
+        system: SYSTEM_PROMPT + visitorNote + nowNote,
         messages: session.messages,
       }),
     });
@@ -112,6 +115,18 @@ const siqEnd = reply => ({ action: "end", replies: [reply] });
 const WELCOME = "Bonjour ! Je suis Leyla, l'assistante virtuelle d'English 4 French. Je suis une intelligence artificielle formée sur nos formations, nos financements et nos plannings. Je peux répondre à vos questions, évaluer votre niveau d'anglais et vous préparer une proposition. Comment préférez-vous continuer ?";
 const WELCOME_SUGGESTIONS = ["Je me forme moi-même", "Former mes salariés", "Faire le test de niveau"];
 const FALLBACK = "Je rencontre un petit souci technique. Vous pouvez réserver directement un rendez-vous de 15 minutes avec Lucile, notre conseillère : " + BOOKING_URL;
+
+const cleanTranscript = session => session.messages.map(m => `${m.role === "user" ? "Visiteur" : "Leyla"} : ${String(m.content).split("\n").filter(l => !/^(SUGGESTIONS|RAPPEL|ACTION)\s*:/i.test(l.trim())).join("\n").trim()}`).join("\n");
+
+async function sendCallback(session, visitor, cb) {
+  if (!CALLBACK_URL) { console.error("CALLBACK_URL manquante : rappel non transmis", JSON.stringify(cb)); return; }
+  try {
+    const payload = { ...cb, transcript: cleanTranscript(session), page: visitor.current_page || "" };
+    if (!payload.email && visitor.email) payload.email = visitor.email;
+    const r = await fetch(CALLBACK_URL, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload) });
+    console.log(`[rappel] ${cb.conseillere} ${r.status} ${(await r.text()).slice(0, 120)}`);
+  } catch (e) { console.error("sendCallback", e.message); }
+}
 
 async function pushLead(session, visitor) {
   if (!LEAD_WEBHOOK_URL) return;
@@ -136,7 +151,8 @@ async function handleSalesIQ(body, rawBody, signature) {
     if (!text && handler === "trigger") return { status: 200, json: siqReply(WELCOME, WELCOME_SUGGESTIONS) };
     if (text) {
       if (session.messages.length === 0) session.messages.push({ role: "assistant", content: WELCOME });
-      const { action, reply, suggestions } = await askLeyla(session, text, visitor);
+      const { action, reply, suggestions, callback } = await askLeyla(session, text, visitor);
+      if (callback && !session.callbackSent) { session.callbackSent = true; sendCallback(session, visitor, callback); }
       console.log(`[${sessionId}] ${action} ${Date.now() - started}ms`);
       if (action === "forward") { pushLead(session, visitor); return { status: 200, json: siqReply(reply, suggestions) }; } // pas de transfert en direct : on reste sur une réponse
       if (action === "end") { pushLead(session, visitor); sessions.delete(sessionId); return { status: 200, json: siqEnd(reply) }; }
