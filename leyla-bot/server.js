@@ -121,16 +121,17 @@ async function pushLead(session, visitor) {
 // ---------- Traitement d'un événement SalesIQ ----------
 async function handleSalesIQ(body, rawBody, signature) {
   if (!verifySignature(rawBody, signature)) return { status: 401, json: { error: "bad signature" } };
-  const handler = body.handler || "";
+  const handler = body.handler || body.request?.handler || "";
   const visitor = body.visitor || {};
+  const msg = body.message ?? body.request?.message;
+  const text = String((typeof msg === "string" ? msg : (msg?.text ?? msg?.value ?? "")) || body.text || "").trim();
+  console.log(`[siq] handler=${handler} op=${body.operation || ""} keys=${Object.keys(body).join(",")} msg=${JSON.stringify(msg ?? null).slice(0, 300)}`);
   const sessionId = visitor.active_conversation_id || visitor.id || visitor.uvid || visitor.email || "anon";
   const session = getSession(sessionId);
   const started = Date.now();
   try {
-    if (handler === "trigger") return { status: 200, json: siqReply(WELCOME, WELCOME_SUGGESTIONS) };
-    if (handler === "message") {
-      const text = (body.message?.text || "").trim();
-      if (!text) return { status: 200, json: siqReply("Je vous écoute, dites-moi ce qui vous amène.", WELCOME_SUGGESTIONS) };
+    if (!text && handler === "trigger") return { status: 200, json: siqReply(WELCOME, WELCOME_SUGGESTIONS) };
+    if (text) {
       if (session.messages.length === 0) session.messages.push({ role: "assistant", content: WELCOME });
       const { action, reply, suggestions } = await askLeyla(session, text, visitor);
       console.log(`[${sessionId}] ${action} ${Date.now() - started}ms`);
@@ -138,7 +139,7 @@ async function handleSalesIQ(body, rawBody, signature) {
       if (action === "end") { pushLead(session, visitor); sessions.delete(sessionId); return { status: 200, json: siqEnd(reply) }; }
       return { status: 200, json: siqReply(reply, suggestions) };
     }
-    return { status: 200, json: siqReply("Je vous écoute.", WELCOME_SUGGESTIONS) };
+    return { status: 200, json: siqReply(WELCOME, WELCOME_SUGGESTIONS) };
   } catch (e) {
     console.error(`[${sessionId}] ${e.name}: ${e.message}`);
     return { status: 200, json: siqReply(FALLBACK, ["Réserver un RDV avec Lucile"]) };
