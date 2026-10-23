@@ -22,7 +22,7 @@ const FORWARD_OPERATORS = (process.env.FORWARD_OPERATORS || "").split(",").map(s
 const SIQ_PUBLIC_KEY = process.env.SIQ_PUBLIC_KEY || "";   // clé publique « Secure your webhook » (optionnel)
 const CALLBACK_URL = process.env.CALLBACK_URL || ""; // fonction CRM leyla_rappel (clé API) : demandes de rappel
 const LEAD_WEBHOOK_URL = process.env.LEAD_WEBHOOK_URL || ""; // Zoho Flow / CRM : reçoit le profil en fin de chat (optionnel)
-const MODEL_TIMEOUT_MS = Number(process.env.MODEL_TIMEOUT_MS || 4200);
+const MODEL_TIMEOUT_MS = Number(process.env.MODEL_TIMEOUT_MS || 4600);
 const MAX_TURNS = 24;
 const SESSION_TTL_MS = 2 * 60 * 60 * 1000;
 
@@ -39,6 +39,27 @@ const SYSTEM_PROMPT = fs.readFileSync(path.join(__dirname, "prompt.md"), "utf8")
   .replaceAll("{{BOOKING_URL}}", BOOKING_URL)
   .replaceAll("{{TEST_URL}}", TEST_URL)
   .replace("{{KNOWLEDGE}}", loadKnowledge());
+
+// ---------- Horaires des centres (pour « Appeler maintenant ») ----------
+// jours : 1 = lundi … 5 = vendredi ; plages en minutes depuis minuit. Jours fériés non gérés.
+const H = (h, m = 0) => h * 60 + m;
+const CENTRES = [
+  { nom: "L'Isle-sur-la-Sorgue", tel: "04 90 26 36 81", j: { 1: [[H(9), H(13)], [H(14), H(17)]], 2: [[H(9), H(13)], [H(14), H(19)]], 3: [[H(9), H(13)], [H(14), H(17)]], 4: [[H(9), H(13)], [H(14), H(17)]], 5: [[H(9), H(13)], [H(14), H(17)]] } },
+  { nom: "Saint-Rémy-de-Provence (siège)", tel: "04 32 61 11 01", j: { 1: [[H(9), H(13)], [H(13, 45), H(17, 30)]], 2: [[H(9), H(13)], [H(13, 45), H(17, 30)]], 3: [[H(9), H(13)], [H(13, 45), H(17, 30)]], 4: [[H(9), H(13)], [H(13, 45), H(17, 30)]], 5: [[H(9), H(12)]] } },
+  { nom: "Sophia Antipolis", tel: "06 85 38 81 09", j: { 1: [[H(9), H(18)]], 2: [[H(9), H(18)]], 4: [[H(9), H(18)]], 5: [[H(9), H(16)]] } },
+  { nom: "Paris 11e", tel: "06 85 38 81 09", j: { 1: [[H(10), H(18)]], 2: [[H(10), H(18)]], 3: [[H(10), H(18)]], 4: [[H(10), H(18)]], 5: [[H(10), H(18)]] } },
+];
+function nowParis() {
+  const p = Object.fromEntries(new Intl.DateTimeFormat("en-GB", { timeZone: "Europe/Paris", weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(new Date()).map(x => [x.type, x.value]));
+  const jour = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6, Sun: 7 }[p.weekday];
+  return { jour, min: Number(p.hour) * 60 + Number(p.minute) };
+}
+function centresNote() {
+  const { jour, min } = nowParis();
+  const ouverts = [], fermes = [];
+  for (const c of CENTRES) ((c.j[jour] || []).some(([a, b]) => min >= a && min < b) ? ouverts : fermes).push(`${c.nom} (${c.tel})`);
+  return `\nCentres ouverts à cet instant : ${ouverts.length ? ouverts.join(", ") : "aucun"}.\nCentres fermés à cet instant : ${fermes.length ? fermes.join(", ") : "aucun"}.`;
+}
 
 // ---------- Sessions en mémoire (par visiteur) ----------
 const sessions = new Map();
@@ -83,7 +104,7 @@ async function askLeyla(session, userText, visitor) {
   const ctx = {};
   for (const k of ["name", "email", "phone", "current_page", "city"]) if (visitor && visitor[k]) ctx[k] = visitor[k];
   const visitorNote = Object.keys(ctx).length ? `\n\n# Contexte visiteur (SalesIQ)\n${JSON.stringify(ctx)}` : "";
-  const nowNote = `\n\n# Date et heure actuelles\n${new Intl.DateTimeFormat("fr-FR", { timeZone: "Europe/Paris", dateStyle: "full", timeStyle: "short" }).format(new Date())} (heure de Paris)`;
+  const nowNote = `\n\n# Date et heure actuelles\n${new Intl.DateTimeFormat("fr-FR", { timeZone: "Europe/Paris", dateStyle: "full", timeStyle: "short" }).format(new Date())} (heure de Paris)${centresNote()}`;
 
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), MODEL_TIMEOUT_MS);
@@ -94,13 +115,13 @@ async function askLeyla(session, userText, visitor) {
       headers: { "content-type": "application/json", "x-api-key": API_KEY, "anthropic-version": "2023-06-01" },
       body: JSON.stringify({
         model: MODEL, max_tokens: 2000, output_config: { effort: "low" }, // la réflexion compte dans max_tokens
-        system: SYSTEM_PROMPT + visitorNote + nowNote,
+        system: [{ type: "text", text: SYSTEM_PROMPT, cache_control: { type: "ephemeral" } }, { type: "text", text: (visitorNote + nowNote).trim() }],
         messages: session.messages,
       }),
     });
     if (!r.ok) throw new Error(`API ${r.status}: ${(await r.text()).slice(0, 200)}`);
     const data = await r.json();
-    console.log(`[model] stop=${data.stop_reason} out=${data.usage?.output_tokens}`);
+    console.log(`[model] stop=${data.stop_reason} out=${data.usage?.output_tokens} cache_read=${data.usage?.cache_read_input_tokens || 0} cache_write=${data.usage?.cache_creation_input_tokens || 0}`);
     const text = (data.content || []).filter(b => b.type === "text").map(b => b.text).join("\n");
     session.messages.push({ role: "assistant", content: text });
     return parseModelOutput(text);
