@@ -88,7 +88,7 @@ async function askLeyla(session, userText, visitor) {
       signal: controller.signal,
       headers: { "content-type": "application/json", "x-api-key": API_KEY, "anthropic-version": "2023-06-01" },
       body: JSON.stringify({
-        model: MODEL, max_tokens: 300, temperature: 0.4,
+        model: MODEL, max_tokens: 300,
         system: SYSTEM_PROMPT + visitorNote,
         messages: session.messages,
       }),
