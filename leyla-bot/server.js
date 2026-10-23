@@ -90,13 +90,14 @@ async function askLeyla(session, userText, visitor) {
       signal: controller.signal,
       headers: { "content-type": "application/json", "x-api-key": API_KEY, "anthropic-version": "2023-06-01" },
       body: JSON.stringify({
-        model: MODEL, max_tokens: 450,
+        model: MODEL, max_tokens: 2000, output_config: { effort: "low" }, // la réflexion compte dans max_tokens
         system: SYSTEM_PROMPT + visitorNote,
         messages: session.messages,
       }),
     });
     if (!r.ok) throw new Error(`API ${r.status}: ${(await r.text()).slice(0, 200)}`);
     const data = await r.json();
+    console.log(`[model] stop=${data.stop_reason} out=${data.usage?.output_tokens}`);
     const text = (data.content || []).filter(b => b.type === "text").map(b => b.text).join("\n");
     session.messages.push({ role: "assistant", content: text });
     return parseModelOutput(text);
