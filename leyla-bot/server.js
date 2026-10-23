@@ -58,6 +58,30 @@ function nowParis() {
   const jour = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6, Sun: 7 }[p.weekday];
   return { jour, min: Number(p.hour) * 60 + Number(p.minute) };
 }
+// ---------- Créneaux de rappel (jamais le week-end, uniquement aux horaires de la personne) ----------
+const fmtH = m => { const h = Math.floor(m / 60), mi = m % 60; return mi ? `${h} h ${String(mi).padStart(2, "0")}` : `${h} h`; };
+function prochainsCreneaux(j, n = 4) {
+  const { min } = nowParis();
+  const p = Object.fromEntries(new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Paris", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date()).map(x => [x.type, x.value]));
+  const out = [];
+  for (let k = 0; k < 14 && out.length < n; k++) {
+    const dt = new Date(Date.UTC(+p.year, +p.month - 1, +p.day + k, 12));
+    const wd = ((dt.getUTCDay() + 6) % 7) + 1;
+    const date = new Intl.DateTimeFormat("fr-FR", { timeZone: "UTC", weekday: "long", day: "numeric", month: "long" }).format(dt);
+    for (const [a, b] of (j[wd] || [])) {
+      if (out.length >= n) break;
+      let debut = a;
+      if (k === 0) { if (b - min < 60) continue; debut = Math.max(a, Math.ceil((min + 30) / 30) * 30); }
+      const quand = k === 0 ? "aujourd'hui " : k === 1 ? "demain " : "";
+      out.push(`${quand}${date}, ${a < H(12, 30) ? "matin" : "après-midi"} (${fmtH(debut)}–${fmtH(b)})`);
+    }
+  }
+  return out;
+}
+function creneauxNote() {
+  const qui = { Lucile: HORAIRES_LUCILE, Alexandra: CENTRES.find(c => c.nom.startsWith("L'Isle")).j, Sylvie: CENTRES.find(c => c.nom.startsWith("Sylvie")).j };
+  return "\n\n# Créneaux de rappel possibles (les SEULS à proposer ; jamais le week-end)\n" + Object.entries(qui).map(([nom, j]) => `- ${nom} : ${prochainsCreneaux(j).join(" ; ")}`).join("\n");
+}
 function centresNote() {
   const { jour, min } = nowParis();
   const ouverts = [], fermes = [];
@@ -108,7 +132,7 @@ async function askLeyla(session, userText, visitor) {
   const ctx = {};
   for (const k of ["name", "email", "phone", "current_page", "city"]) if (visitor && visitor[k]) ctx[k] = visitor[k];
   const visitorNote = Object.keys(ctx).length ? `\n\n# Contexte visiteur (SalesIQ)\n${JSON.stringify(ctx)}` : "";
-  const nowNote = `\n\n# Date et heure actuelles\n${new Intl.DateTimeFormat("fr-FR", { timeZone: "Europe/Paris", dateStyle: "full", timeStyle: "short" }).format(new Date())} (heure de Paris)${centresNote()}`;
+  const nowNote = `\n\n# Date et heure actuelles\n${new Intl.DateTimeFormat("fr-FR", { timeZone: "Europe/Paris", dateStyle: "full", timeStyle: "short" }).format(new Date())} (heure de Paris)${centresNote()}${creneauxNote()}`;
 
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), MODEL_TIMEOUT_MS);
