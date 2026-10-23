@@ -115,7 +115,7 @@ async function askLeyla(session, userText, visitor) {
       headers: { "content-type": "application/json", "x-api-key": API_KEY, "anthropic-version": "2023-06-01" },
       body: JSON.stringify({
         model: MODEL, max_tokens: 2000, output_config: { effort: "low" }, // la réflexion compte dans max_tokens
-        system: [{ type: "text", text: SYSTEM_PROMPT, cache_control: { type: "ephemeral" } }, { type: "text", text: (visitorNote + nowNote).trim() }],
+        system: [{ type: "text", text: SYSTEM_PROMPT, cache_control: { type: "ephemeral", ttl: "1h" } }, { type: "text", text: (visitorNote + nowNote).trim() }],
         messages: session.messages,
       }),
     });
