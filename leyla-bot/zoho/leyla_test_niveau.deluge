@@ -15,6 +15,7 @@ email = ifnull(data.get("Email"),"").trim();
 tel = ifnull(data.get("Phone"),"");
 dateTest = ifnull(data.get("TDNA_Date"),zoho.currentdate.toString("yyyy-MM-dd"));
 niveau = ifnull(data.get("TDNA_Niveau"),"");
+score = ifnull(data.get("TDNA_Score"),"");
 points = ifnull(data.get("TDNA_3_points_am_liorer"),"");
 desc = ifnull(data.get("Description"),"");
 site = ifnull(data.get("site"),"");
@@ -49,6 +50,10 @@ champs.put("TDNA_Date",dateTest);
 if(niveau != "")
 {
 	champs.put("TDNA_Niveau",niveau);
+}
+if(score != "")
+{
+	champs.put("TDNA_Score",score.toLong());
 }
 if(points != "")
 {
