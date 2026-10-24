@@ -19,8 +19,16 @@ Contraintes SalesIQ respectées : réponse < 5 s (timeout modèle 4,2 s puis mes
 ## Branchement dans SalesIQ
 Settings → Bot → Zobot → Ajouter → Plateformes tierces → **Webhook** → nom « Leyla », profil (photo `leyla-avatar.jpg`), marque English 4 French, puis URL du webhook : `https://<votre-domaine>/salesiq`. Activer « Secure your webhook » et coller la clé publique dans `SIQ_PUBLIC_KEY`.
 
+## Test de niveau adaptatif dans le chat (`placement/`)
+Quand le visiteur clique « Faire le test de niveau » (ou écrit « tester mon niveau »), Leyla passe la main au moteur du dossier `placement/` : aucun appel au modèle, chaque réponse est calculée en quelques millisecondes.
+- Déroulé : prénom + nom, e-mail, téléphone, lieu de formation (3 boutons, puis « Autre centre »), puis 14 à 18 questions (3 réponses en boutons + « Je ne sais pas » ; « stop » interrompt), puis le niveau (A1 à C1), 3 points à améliorer, 3 parcours (niveau / entreprise / certification) avec leurs pages, et le lien de RDV (Lucile, ou Alexandra pour L'Isle-sur-la-Sorgue, via `BOOKING_URL` / `BOOKING_URL_ISLE`).
+- Banque : `placement/items.json`, 74 questions du TDN90 calibrées sur 1 237 passages ; compétences et conseils dans `placement/skills.json` ; seuils, nombre de questions et pages des parcours dans `placement/engine.js` (`CONFIG`, `COURSES`).
+- Après le test, le résultat est ajouté à l'historique de la conversation : Leyla continue en connaissant le niveau et les coordonnées.
+- `TEST_WEBHOOK_URL` (optionnel) : reçoit en POST un JSON `{First_Name, Last_Name, Email, Phone, TDNA_Date, TDNA_Niveau, TDNA_3_points_am_liorer, Description, site, theta, answers, page}` à brancher sur Zoho Flow ou une fonction CRM pour créer/mettre à jour le prospect (champs `TDNA_*` existants dans le module Prospects). Sans cette variable, le résultat est seulement journalisé.
+- Tests : `npm run test:placement` (sans clé API ni serveur).
+
 ## Mise à jour du contenu
 Modifier les fichiers `knowledge/*.txt` (mêmes textes que vos 7 documents) ou `prompt.md`, puis redémarrer.
 
 ## Test local
-`ANTHROPIC_API_KEY=... npm start` puis `npm test` dans un autre terminal (simule une conversation complète et mesure les temps de réponse).
+`ANTHROPIC_API_KEY=... npm start` puis `npm test` dans un autre terminal (simule une conversation complète et mesure les temps de réponse). `npm run test:placement` vérifie le test de niveau seul.

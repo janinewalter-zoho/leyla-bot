@@ -9,6 +9,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { wantsTest, startTest, stepTest } from "./placement/flow.js";
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // ---------- Configuration (variables d'environnement) ----------
@@ -22,6 +24,7 @@ const FORWARD_OPERATORS = (process.env.FORWARD_OPERATORS || "").split(",").map(s
 const SIQ_PUBLIC_KEY = process.env.SIQ_PUBLIC_KEY || "";   // clé publique « Secure your webhook » (optionnel)
 const CALLBACK_URL = process.env.CALLBACK_URL || ""; // fonction CRM leyla_rappel (clé API) : demandes de rappel
 const LEAD_WEBHOOK_URL = process.env.LEAD_WEBHOOK_URL || ""; // Zoho Flow / CRM : reçoit le profil en fin de chat (optionnel)
+const TEST_WEBHOOK_URL = process.env.TEST_WEBHOOK_URL || ""; // Zoho Flow / CRM : reçoit le résultat du test de niveau fait dans le chat (optionnel)
 const MODEL_TIMEOUT_MS = Number(process.env.MODEL_TIMEOUT_MS || 4600);
 const MAX_TURNS = 24;
 const SESSION_TTL_MS = 2 * 60 * 60 * 1000;
@@ -179,6 +182,7 @@ async function askLeyla(session, userText, visitor) {
 
 // ---------- Réponses SalesIQ ----------
 const siqReply = (reply, suggestions) => ({ action: "reply", replies: [reply], ...(suggestions?.length ? { suggestions } : {}) });
+const siqReplies = (replies, suggestions) => ({ action: "reply", replies, ...(suggestions?.length ? { suggestions } : {}) });
 const siqForward = reply => ({ action: "forward", replies: [reply], ...(FORWARD_OPERATORS.length ? { operators: FORWARD_OPERATORS } : {}) });
 const siqEnd = reply => ({ action: "end", replies: [reply] });
 
@@ -196,6 +200,22 @@ async function sendCallback(session, visitor, cb) {
     const r = await fetch(CALLBACK_URL, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload) });
     console.log(`[rappel] ${cb.conseillere} ${r.status} ${(await r.text()).slice(0, 120)}`);
   } catch (e) { console.error("sendCallback", e.message); }
+}
+
+// Résultat du test de niveau fait dans le chat → CRM (champs TDNA_Date, TDNA_Niveau, TDNA_3_points_am_liorer sur le prospect)
+async function pushTestResult(result, visitor) {
+  if (!TEST_WEBHOOK_URL) { console.log(`[tdna] ${result.email} ${result.level} (TEST_WEBHOOK_URL absente : non transmis)`); return; }
+  try {
+    const payload = {
+      First_Name: result.first, Last_Name: result.last || result.first, Email: result.email, Phone: result.phone,
+      TDNA_Date: result.at.slice(0, 10), TDNA_Niveau: result.level,
+      TDNA_3_points_am_liorer: result.points.map((p, i) => `${i + 1}. ${p}`).join("\n"),
+      Description: `Test de niveau adaptatif (chat Leyla) : ${result.level} (${result.nCorrect}/${result.nQuestions}, ${result.seconds}s) · Lieu souhaité : ${result.site}`,
+      site: result.site, theta: result.theta, answers: result.answers, page: visitor.current_page || "",
+    };
+    const r = await fetch(TEST_WEBHOOK_URL, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload) });
+    console.log(`[tdna] ${result.email} ${result.level} → ${r.status}`);
+  } catch (e) { console.error("pushTestResult", e.message); }
 }
 
 async function pushLead(session, visitor) {
@@ -221,6 +241,18 @@ async function handleSalesIQ(body, rawBody, signature) {
     if (!text && handler === "trigger") return { status: 200, json: siqReply(WELCOME, WELCOME_SUGGESTIONS) };
     if (text) {
       if (session.messages.length === 0) session.messages.push({ role: "assistant", content: WELCOME });
+      // Test de niveau dans le chat : aucun appel au modèle, réponse immédiate calculée par le moteur.
+      if (!session.test && wantsTest(text) && (!session.testResult || /refaire|encore|nouveau/i.test(text))) {
+        const out = startTest(session, visitor);
+        console.log(`[${sessionId}] tdna start ${Date.now() - started}ms`);
+        return { status: 200, json: siqReplies(out.replies, out.suggestions) };
+      }
+      if (session.test) {
+        const out = stepTest(session, text, { booking: BOOKING_URL, bookingIsle: BOOKING_URL_ISLE });
+        if (out.done) pushTestResult(out.result, visitor);
+        console.log(`[${sessionId}] tdna ${out.done ? "done" : out.exited ? "exit" : "step"} ${Date.now() - started}ms`);
+        return { status: 200, json: siqReplies(out.replies, out.suggestions) };
+      }
       const { action, reply, suggestions, callback } = await askLeyla(session, text, visitor);
       if (callback && !session.callbackSent) { session.callbackSent = true; sendCallback(session, visitor, callback); }
       console.log(`[${sessionId}] ${action} ${Date.now() - started}ms`);

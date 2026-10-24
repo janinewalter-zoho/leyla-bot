@@ -4,6 +4,12 @@
   "description": "Leyla, assistante virtuelle IA d'English 4 French — webhook Zobot pour Zoho SalesIQ (sans dépendance)",
   "type": "module",
   "main": "server.js",
-  "scripts": { "start": "node server.js", "test": "node test/simulate.js" },
-  "engines": { "node": ">=20" }
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test/simulate.js",
+    "test:placement": "node --test test/placement.test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
 }

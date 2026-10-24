@@ -1,0 +1,1177 @@
+[
+{
+"id": 2,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "What time ______ ?",
+"opts": [
+"is it",
+"it is",
+"are they",
+"is"
+],
+"ans": 0,
+"a": 0.802,
+"b": -2.693,
+"s": "questions"
+},
+{
+"id": 3,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "My meeting is ______ 10.30 am",
+"opts": [
+"at",
+"in",
+"on",
+"near"
+],
+"ans": 0,
+"a": 1.371,
+"b": -2.332,
+"s": "prep"
+},
+{
+"id": 16,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "Do you like ______ ?",
+"opts": [
+"swimming",
+"swim",
+"is swimming",
+"swam"
+],
+"ans": 0,
+"a": 0.689,
+"b": -2.081,
+"s": "gerinf"
+},
+{
+"id": 1,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "Bob and Peter ______ students.",
+"opts": [
+"are",
+"is",
+"be",
+"am"
+],
+"ans": 0,
+"a": 2.794,
+"b": -1.669,
+"s": "be"
+},
+{
+"id": 75,
+"kind": "mcq",
+"cat": "Vocabulaire & expressions",
+"q": "The next, and ______ important step is to give the snowman an identity.",
+"opts": [
+"very",
+"just",
+"extra",
+"to"
+],
+"ans": 0,
+"a": 1.726,
+"b": -1.288,
+"s": "quantite"
+},
+{
+"id": 5,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "A : How can I get to the train station ? B: ______ bus.",
+"opts": [
+"By",
+"On",
+"For",
+"In"
+],
+"ans": 0,
+"a": 1.879,
+"b": -1.017,
+"s": "prep"
+},
+{
+"id": 11,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "______ a piece of cake? No, thank you.",
+"opts": [
+"Would you like",
+"Do you like",
+"Want you",
+"Are you like"
+],
+"ans": 0,
+"a": 1.95,
+"b": -0.929,
+"s": "politesse"
+},
+{
+"id": 22,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "I didn't understand my work assignment______ I asked my colleague Mary for help.",
+"opts": [
+"so",
+"because",
+"that",
+"to"
+],
+"ans": 0,
+"a": 1.984,
+"b": -0.877,
+"s": "liaison"
+},
+{
+"id": 4,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "______ is an engineer.",
+"opts": [
+"Ted's cousin",
+"Ted cousin",
+"Cousin Ted's",
+"Cousin of Ted's"
+],
+"ans": 0,
+"a": 1.958,
+"b": -0.805,
+"s": "possessif"
+},
+{
+"id": 72,
+"kind": "mcq",
+"cat": "Vocabulaire & expressions",
+"q": "Construction should start at ______ base by rolling a ball approximately 90 cm in diameter.",
+"opts": [
+"the",
+"to",
+"extra",
+"very"
+],
+"ans": 0,
+"a": 1.504,
+"b": -0.749,
+"s": "articles"
+},
+{
+"id": 21,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "The Johnsons painted their house______.",
+"opts": [
+"themselves",
+"himself",
+"ourselves",
+"myself"
+],
+"ans": 0,
+"a": 2.6,
+"b": -0.718,
+"s": "reflexifs"
+},
+{
+"id": 74,
+"kind": "mcq",
+"cat": "Vocabulaire & expressions",
+"q": "Two sticks ______ about 45 cm long must be inserted halfway up either side of the middle ball.",
+"opts": [
+"measuring",
+"slightly",
+"to",
+"extra"
+],
+"ans": 0,
+"a": 1.428,
+"b": -0.636,
+"s": "quantite"
+},
+{
+"id": 6,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "______ 20 desks in the classroom.",
+"opts": [
+"There are",
+"They are",
+"There is",
+"This is"
+],
+"ans": 0,
+"a": 0.957,
+"b": -0.608,
+"s": "thereis"
+},
+{
+"id": 76,
+"kind": "mcq",
+"cat": "Vocabulaire & expressions",
+"q": "Five stones must be arranged in a semicircle ______ create a smile.",
+"opts": [
+"to",
+"and",
+"least",
+"extra"
+],
+"ans": 0,
+"a": 2.446,
+"b": -0.589,
+"s": "infbut"
+},
+{
+"id": 15,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "There aren’t ______ buses late in the evening.",
+"opts": [
+"any",
+"some",
+"no",
+"a"
+],
+"ans": 0,
+"a": 1.462,
+"b": -0.539,
+"s": "quantif"
+},
+{
+"id": 7,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "Paul ______ romantic films.",
+"opts": [
+"doesn’t like",
+"don’t like",
+"isn’t likes",
+"likes not"
+],
+"ans": 0,
+"a": 2.207,
+"b": -0.535,
+"s": "present3"
+},
+{
+"id": 13,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "Bill ______ for the bus when he fell down.",
+"opts": [
+"was running",
+"runs",
+"is running",
+"ran"
+],
+"ans": 0,
+"a": 1.756,
+"b": -0.432,
+"s": "pastcont"
+},
+{
+"id": 40,
+"kind": "mcq",
+"cat": "Temps verbaux",
+"q": "A: ______ (have) you ever left your keys in the house and locked the door?",
+"opts": [
+"Have",
+"Had",
+"Are",
+"Did"
+],
+"ans": 0,
+"a": 1.153,
+"b": -0.412,
+"s": "presperf"
+},
+{
+"id": 57,
+"kind": "mcq",
+"cat": "Vocabulaire & expressions",
+"q": "I'm sorry to ______ your bad news.",
+"opts": [
+"hear",
+"listen",
+"know",
+"find"
+],
+"ans": 0,
+"a": 1.655,
+"b": -0.383,
+"s": "verbesproches"
+},
+{
+"id": 35,
+"kind": "mcq",
+"cat": "Temps verbaux",
+"q": "A man was arrested after his children came to school with £500 in fake money. School officials ______ (call) the police.",
+"opts": [
+"called",
+"call",
+"calling",
+"have called"
+],
+"ans": 0,
+"a": 1.117,
+"b": -0.181,
+"s": "preterit"
+},
+{
+"id": 9,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "The Maxi X computer is ______ than the Super X computer.",
+"opts": [
+"cheaper",
+"more cheap",
+"cheapest",
+"cheap"
+],
+"ans": 0,
+"a": 2.214,
+"b": -0.135,
+"s": "comparatif"
+},
+{
+"id": 23,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "These are the photos ______ I took on holiday.",
+"opts": [
+"which",
+"where",
+"what",
+"who"
+],
+"ans": 0,
+"a": 1.464,
+"b": -0.126,
+"s": "relatifs"
+},
+{
+"id": 73,
+"kind": "mcq",
+"cat": "Vocabulaire & expressions",
+"q": "For the head, roll a 30 cm ball ______ place it on top.",
+"opts": [
+"and",
+"to",
+"just",
+"the"
+],
+"ans": 0,
+"a": 1.411,
+"b": -0.085,
+"s": "liaison"
+},
+{
+"id": 18,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "John isn't here. He ______ be ill",
+"opts": [
+"must",
+"can",
+"will",
+"do"
+],
+"ans": 0,
+"a": 1.695,
+"b": -0.081,
+"s": "modaux"
+},
+{
+"id": 24,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "She was late, but she managed ______ here.",
+"opts": [
+"to get",
+"getting",
+"get",
+"got"
+],
+"ans": 0,
+"a": 1.137,
+"b": -0.056,
+"s": "gerinf"
+},
+{
+"id": 19,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "______ seen fireworks before?",
+"opts": [
+"Have you ever",
+"Did you ever",
+"Do you ever",
+"Are you ever"
+],
+"ans": 0,
+"a": 1.509,
+"b": -0.028,
+"s": "presperf"
+},
+{
+"id": 81,
+"kind": "error",
+"cat": "Repérage d'erreurs",
+"q": "Ever after he left University three months ago, my brother has been applying for different jobs.",
+"opts": [
+"ever after",
+"has been",
+"left"
+],
+"ans": 0,
+"a": 1.202,
+"b": -0.01,
+"s": "forsince"
+},
+{
+"id": 61,
+"kind": "mcq",
+"cat": "Temps verbaux",
+"q": "The first time I ______ (speak) to my best friend Susan was the day I saw her waiting for a bus.",
+"opts": [
+"spoke",
+"speak",
+"was speaking",
+"have spoken"
+],
+"ans": 0,
+"a": 1.855,
+"b": 0.007,
+"s": "irreguliers"
+},
+{
+"id": 56,
+"kind": "mcq",
+"cat": "Vocabulaire & expressions",
+"q": "In five years I ______ living in a bigger house.",
+"opts": [
+"will be",
+"will",
+"will have",
+"will been"
+],
+"ans": 0,
+"a": 1.05,
+"b": 0.028,
+"s": "futur"
+},
+{
+"id": 78,
+"kind": "mcq",
+"cat": "Vocabulaire & expressions",
+"q": "Old gloves, a hat and a scarf can add a little ______ to your new friend.",
+"opts": [
+"extra",
+"slightly",
+"just",
+"to"
+],
+"ans": 0,
+"a": 2.01,
+"b": 0.188,
+"s": "quantite"
+},
+{
+"id": 77,
+"kind": "mcq",
+"cat": "Vocabulaire & expressions",
+"q": "A fresh carrot comes next, going ______ a little below the eyes to form a pointed nose.",
+"opts": [
+"just",
+"to",
+"least",
+"and"
+],
+"ans": 0,
+"a": 1.296,
+"b": 0.199,
+"s": "quantite"
+},
+{
+"id": 26,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "English ______ in many parts of the world.",
+"opts": [
+"is spoken",
+"is speaking",
+"speaks",
+"spoke"
+],
+"ans": 0,
+"a": 1.396,
+"b": 0.205,
+"s": "passif"
+},
+{
+"id": 25,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "She asked ______ call her after ten.",
+"opts": [
+"him not to",
+"to him to not",
+"him not",
+"not him to"
+],
+"ans": 0,
+"a": 1.306,
+"b": 0.225,
+"s": "indirect"
+},
+{
+"id": 8,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "Edouard ______ in the park on Saturday.",
+"opts": [
+"always runs",
+"always run",
+"run always",
+"runs always"
+],
+"ans": 0,
+"a": 1.441,
+"b": 0.231,
+"s": "adverbes"
+},
+{
+"id": 60,
+"kind": "mcq",
+"cat": "Vocabulaire & expressions",
+"q": "Are you ______ in European History ?",
+"opts": [
+"interested",
+"interesting",
+"interest",
+"interests"
+],
+"ans": 0,
+"a": 0.932,
+"b": 0.284,
+"s": "edinging"
+},
+{
+"id": 83,
+"kind": "error",
+"cat": "Repérage d'erreurs",
+"q": "If he wouldn't enjoy the film, why did he stay to the end ?",
+"opts": [
+"wouldn't",
+"to the end",
+"did"
+],
+"ans": 0,
+"a": 1.035,
+"b": 0.329,
+"s": "conditionnels"
+},
+{
+"id": 58,
+"kind": "mcq",
+"cat": "Vocabulaire & expressions",
+"q": "I have decided to ______ something about my hair.",
+"opts": [
+"do",
+"make",
+"put",
+"get"
+],
+"ans": 0,
+"a": 1.212,
+"b": 0.352,
+"s": "verbesproches"
+},
+{
+"id": 12,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "Jane ______ Spanish very well..",
+"opts": [
+"don't speak",
+"didn't speak",
+"didn't spoke",
+"don't spoke"
+],
+"ans": 1,
+"a": 1.201,
+"b": 0.369,
+"s": "preterit"
+},
+{
+"id": 66,
+"kind": "mcq",
+"cat": "Temps verbaux",
+"q": "I'm sure we ______ (have) a great time travelling around Europe.",
+"opts": [
+"will have",
+"have",
+"had",
+"having"
+],
+"ans": 0,
+"a": 2.112,
+"b": 0.398,
+"s": "futur"
+},
+{
+"id": 51,
+"kind": "mcq",
+"cat": "Vocabulaire & expressions",
+"q": "I'm ______ meeting him.",
+"opts": [
+"looking forward to",
+"looking forward",
+"looked to about",
+"look forward in"
+],
+"ans": 0,
+"a": 0.837,
+"b": 0.456,
+"s": "phrasal"
+},
+{
+"id": 39,
+"kind": "mcq",
+"cat": "Temps verbaux",
+"q": "…because she ______ (think) she would get into trouble for stealing.",
+"opts": [
+"thought",
+"thinks",
+"think",
+"was thinking"
+],
+"ans": 0,
+"a": 1.996,
+"b": 0.528,
+"s": "irreguliers"
+},
+{
+"id": 14,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "______ notebook is it ?",
+"opts": [
+"Whose",
+"Where",
+"Who's",
+"Who"
+],
+"ans": 0,
+"a": 1.336,
+"b": 0.59,
+"s": "questions"
+},
+{
+"id": 43,
+"kind": "mcq",
+"cat": "Temps verbaux",
+"q": "A: Well, I ______ (have) already shut the door…",
+"opts": [
+"had",
+"have",
+"has",
+"was"
+],
+"ans": 0,
+"a": 1.273,
+"b": 0.6,
+"s": "pastperf"
+},
+{
+"id": 87,
+"kind": "error",
+"cat": "Repérage d'erreurs",
+"q": "I wanted her to go out with me, but I couldn't afford taking her to an expensive restaurant.",
+"opts": [
+"taking",
+"go out",
+"her"
+],
+"ans": 0,
+"a": 0.992,
+"b": 0.655,
+"s": "gerinf"
+},
+{
+"id": 20,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "We’ve been friends ______ many years.",
+"opts": [
+"since",
+"for",
+"during",
+"from"
+],
+"ans": 1,
+"a": 1.323,
+"b": 0.692,
+"s": "forsince"
+},
+{
+"id": 84,
+"kind": "error",
+"cat": "Repérage d'erreurs",
+"q": "I don't know quite how you can put up with your flatmate playing such loud music all the time !",
+"opts": [
+"quite",
+"put up",
+"playing"
+],
+"ans": 0,
+"a": 1.36,
+"b": 0.7,
+"s": "adverbes"
+},
+{
+"id": 79,
+"kind": "error",
+"cat": "Repérage d'erreurs",
+"q": "I wasn't very good at chemistry and neither wasn't my sister.",
+"opts": [
+"wasn't",
+"neither",
+"at"
+],
+"ans": 0,
+"a": 0.942,
+"b": 0.715,
+"s": "sodoi"
+},
+{
+"id": 55,
+"kind": "mcq",
+"cat": "Vocabulaire & expressions",
+"q": "She didn't feel comfortable ______ with us so she went to a hotel.",
+"opts": [
+"to stay",
+"staying",
+"stayed",
+"stay"
+],
+"ans": 1,
+"a": 1.363,
+"b": 0.718,
+"s": "gerinf"
+},
+{
+"id": 80,
+"kind": "error",
+"cat": "Repérage d'erreurs",
+"q": "He says he can't stand to have the centre of attention, but I think he secretly enjoys showing off.",
+"opts": [
+"to have",
+"showing off",
+"of"
+],
+"ans": 0,
+"a": 1.1,
+"b": 0.726,
+"s": "gerinf"
+},
+{
+"id": 52,
+"kind": "mcq",
+"cat": "Vocabulaire & expressions",
+"q": "My car was stolen. I wish I______ it in the car park.",
+"opts": [
+"had left",
+"have left",
+"was leaving",
+"leave"
+],
+"ans": 0,
+"a": 1.307,
+"b": 0.765,
+"s": "wish"
+},
+{
+"id": 71,
+"kind": "mcq",
+"cat": "Vocabulaire & expressions",
+"q": "How to create the perfect snowman: begin with at ______ 5 cm of wet snow covering a large surface, preferably a front garden.",
+"opts": [
+"measuring",
+"least",
+"just",
+"slightly"
+],
+"ans": 1,
+"a": 1.779,
+"b": 0.812,
+"s": "quantite"
+},
+{
+"id": 17,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "A : I like horror films. B: ______.",
+"opts": [
+"So do I",
+"So am I",
+"Neither do I",
+"Neither am"
+],
+"ans": 0,
+"a": 1.514,
+"b": 0.83,
+"s": "sodoi"
+},
+{
+"id": 82,
+"kind": "error",
+"cat": "Repérage d'erreurs",
+"q": "While he was living in Spain he has gained a lot of experience and made a lot of useful contacts.",
+"opts": [
+"has gained",
+"made",
+"was living"
+],
+"ans": 0,
+"a": 1.038,
+"b": 0.846,
+"s": "presperfvspret"
+},
+{
+"id": 38,
+"kind": "mcq",
+"cat": "Temps verbaux",
+"q": "The girl originally ______ (not want) to talk to the police…",
+"opts": [
+"didn't want",
+"doesn't want",
+"don't want",
+"not wanted"
+],
+"ans": 0,
+"a": 1.848,
+"b": 0.851,
+"s": "preterit"
+},
+{
+"id": 27,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "Rick ______ by the new hairdresser on Bridge street.",
+"opts": [
+"had cut his hair",
+"had his hair cut",
+"cut the hair",
+"his hair had cut"
+],
+"ans": 1,
+"a": 1.62,
+"b": 0.969,
+"s": "causatif"
+},
+{
+"id": 62,
+"kind": "mcq",
+"cat": "Temps verbaux",
+"q": "As it ______ (rain), I offered her a lift.",
+"opts": [
+"was raining",
+"rained",
+"raining",
+"rains"
+],
+"ans": 0,
+"a": 2.238,
+"b": 1.065,
+"s": "pastcont"
+},
+{
+"id": 10,
+"kind": "mcq",
+"cat": "Grammaire générale",
+"q": "Jill ______ tennis in London next week.",
+"opts": [
+"going to play",
+"is playing",
+"play",
+"playing"
+],
+"ans": 1,
+"a": 1.246,
+"b": 1.074,
+"s": "futur"
+},
+{
+"id": 85,
+"kind": "error",
+"cat": "Repérage d'erreurs",
+"q": "He stopped to arrive at work early after he was turned down for promotion.",
+"opts": [
+"to arrive",
+"down for",
+"was"
+],
+"ans": 0,
+"a": 0.781,
+"b": 1.14,
+"s": "gerinf"
+},
+{
+"id": 36,
+"kind": "mcq",
+"cat": "Temps verbaux",
+"q": "The children said they took the £50 notes from their grandfather's garage. A money printing machine ______ (find) at his home on Thursday morning.",
+"opts": [
+"was found",
+"found",
+"has been found",
+"finded"
+],
+"ans": 0,
+"a": 1.786,
+"b": 1.173,
+"s": "passif"
+},
+{
+"id": 54,
+"kind": "mcq",
+"cat": "Vocabulaire & expressions",
+"q": "They let ______.",
+"opts": [
+"us to do it",
+"us do it",
+"it do us",
+"us it do"
+],
+"ans": 1,
+"a": 0.899,
+"b": 1.188,
+"s": "letmake"
+},
+{
+"id": 64,
+"kind": "mcq",
+"cat": "Temps verbaux",
+"q": "We ______ (spend) a lot of time with each other every week…",
+"opts": [
+"spend",
+"spent",
+"are spending",
+"spended"
+],
+"ans": 0,
+"a": 0.537,
+"b": 1.263,
+"s": "present3"
+},
+{
+"id": 37,
+"kind": "mcq",
+"cat": "Temps verbaux",
+"q": "Brown ______ (take) to the police station for questioning later in the day.",
+"opts": [
+"was taken",
+"took",
+"takes",
+"has been taken"
+],
+"ans": 0,
+"a": 2.107,
+"b": 1.414,
+"s": "passif"
+},
+{
+"id": 59,
+"kind": "mcq",
+"cat": "Vocabulaire & expressions",
+"q": "Jason takes ______ his mother.",
+"opts": [
+"with",
+"after",
+"along",
+"across"
+],
+"ans": 1,
+"a": 1.19,
+"b": 1.473,
+"s": "phrasal"
+},
+{
+"id": 63,
+"kind": "mcq",
+"cat": "Temps verbaux",
+"q": "We ______ (be) good friends since then.",
+"opts": [
+"have been",
+"are",
+"were",
+"was"
+],
+"ans": 0,
+"a": 1.585,
+"b": 1.623,
+"s": "presperf"
+},
+{
+"id": 44,
+"kind": "mcq",
+"cat": "Temps verbaux",
+"q": "…when I remembered that I ______ (put) my keys in my other coat with my passport.",
+"opts": [
+"had put",
+"put",
+"have put",
+"putted"
+],
+"ans": 0,
+"a": 1.591,
+"b": 1.753,
+"s": "pastperf"
+},
+{
+"id": 68,
+"kind": "mcq",
+"cat": "Temps verbaux",
+"q": "I failed the exam because I didn't study. → If I had studied, I ______ failed the exam.",
+"opts": [
+"wouldn't have",
+"didn't",
+"hadn't",
+"would not"
+],
+"ans": 0,
+"a": 1.854,
+"b": 1.774,
+"s": "cond3"
+},
+{
+"id": 69,
+"kind": "mcq",
+"cat": "Temps verbaux",
+"q": "I didn't say anything because I didn't hear you come in. → If I ______ you come in, I would have said something.",
+"opts": [
+"had heard",
+"heard",
+"hear",
+"have heard"
+],
+"ans": 0,
+"a": 1.703,
+"b": 1.821,
+"s": "cond3"
+},
+{
+"id": 70,
+"kind": "mcq",
+"cat": "Temps verbaux",
+"q": "It's a pity that you didn't come to the party. → I wish you ______ to the party.",
+"opts": [
+"had come",
+"come",
+"will come",
+"came"
+],
+"ans": 0,
+"a": 2.384,
+"b": 1.854,
+"s": "wish"
+},
+{
+"id": 53,
+"kind": "mcq",
+"cat": "Vocabulaire & expressions",
+"q": "I phoned her ______ I heard the news.",
+"opts": [
+"the moment",
+"during",
+"by the time",
+"minute"
+],
+"ans": 0,
+"a": 0.448,
+"b": 1.978,
+"s": "liaison"
+},
+{
+"id": 67,
+"kind": "mcq",
+"cat": "Temps verbaux",
+"q": "I took the wrong clothes on holiday. → I wish I ______ the right clothes on holiday.",
+"opts": [
+"had taken",
+"will take",
+"take",
+"took"
+],
+"ans": 0,
+"a": 1.896,
+"b": 2.016,
+"s": "wish"
+},
+{
+"id": 42,
+"kind": "mcq",
+"cat": "Temps verbaux",
+"q": "A: I did it last week. Remember, I ______ (plan) that trip to New York?",
+"opts": [
+"had planned",
+"planned",
+"plan",
+"have planned"
+],
+"ans": 0,
+"a": 1.509,
+"b": 2.104,
+"s": "pastperf"
+},
+{
+"id": 41,
+"kind": "mcq",
+"cat": "Temps verbaux",
+"q": "B: Of course. I ______ (do) it a couple of times.",
+"opts": [
+"have done",
+"did",
+"do",
+"have did"
+],
+"ans": 0,
+"a": 1.483,
+"b": 2.501,
+"s": "presperf"
+},
+{
+"id": 86,
+"kind": "error",
+"cat": "Repérage d'erreurs",
+"q": "There's no point phoning Katherine, she always answers the phone when anyone rings her.",
+"opts": [
+"phoning",
+"rings",
+"always"
+],
+"ans": 2,
+"a": 0.771,
+"b": 2.984,
+"s": "adverbes"
+},
+{
+"id": 65,
+"kind": "mcq",
+"cat": "Temps verbaux",
+"q": "…and next month, we ______ (go) on holiday together.",
+"opts": [
+"are going",
+"will go",
+"went",
+"going"
+],
+"ans": 0,
+"a": 0.492,
+"b": 3.177,
+"s": "futur"
+}
+]

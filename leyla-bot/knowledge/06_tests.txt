@@ -1,14 +1,14 @@
 TESTS DE NIVEAU ET NIVEAUX D'ANGLAIS
 
 LES TESTS
-Test express (mini test) : 12 questions, environ 3 minutes. C'est le test proposé sur le site et par Leyla, l'assistante virtuelle du site. Lien : english4french.typeform.com/BannieresiteE4F
+Test de niveau adaptatif (TDNA) : 14 à 18 questions, 5 à 8 minutes, résultat immédiat (A1 à C1). C'est le test proposé par Leyla, directement dans le chat : il s'adapte aux réponses (plus difficile si on réussit, plus simple si on hésite) et il est construit à partir des 90 questions du TDN90. À la fin, il donne le niveau, 3 points à améliorer et les parcours conseillés.
 Test de positionnement complet (TDN90) : 90 questions. Il est fait au démarrage de la formation et fixe le niveau officiel inscrit dans la convention. Il est repassé en fin de formation pour mesurer les progrès. Lien : english4french.typeform.com/TDN90E4F
 Test d'anglais professionnel (business) : pour une personne qui a un besoin professionnel précis et un niveau au moins intermédiaire.
 
-LE RÉSULTAT DU TEST EXPRESS
+LE RÉSULTAT DU TEST DE NIVEAU ADAPTATIF
 C'est une première estimation, pas le niveau officiel. Le niveau officiel est établi par le test de 90 questions au démarrage.
-Si un prospect a déjà fait le test express avec Leyla sur le site, son niveau estimé est connu (A1, A2, A2+, B1, B2 ou C1/C2).
-Le test de niveau ne se fait pas par téléphone pendant l'appel : on peut envoyer le lien du test express, ou la conseillère l'organise.
+Si un prospect a déjà fait le test avec Leyla dans le chat, son niveau estimé est connu (A1, A2, B1, B2 ou C1).
+Le test de niveau ne se fait pas par téléphone pendant l'appel : on peut inviter la personne à le faire dans le chat, ou la conseillère l'organise.
 Pour une demande entreprise, le test de chaque salarié est organisé par la conseillère.
 
 LES NIVEAUX (échelle européenne CECRL), EN MOTS SIMPLES

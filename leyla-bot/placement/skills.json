@@ -1,0 +1,150 @@
+{
+ "be": {
+  "name": "Le verbe be au présent",
+  "tip": "I am, you are, he is : la base de toute phrase. On le fixe dès les premières séances."
+ },
+ "questions": {
+  "name": "Poser une question",
+  "tip": "L'ordre des mots dans les questions (What time is it ? Whose… ?) se travaille à l'oral, en situation."
+ },
+ "prep": {
+  "name": "Les prépositions de temps et de lieu",
+  "tip": "At 10.30, on Monday, by bus : des petits mots qui changent tout dans les échanges du quotidien."
+ },
+ "possessif": {
+  "name": "Le possessif ('s)",
+  "tip": "Ted's cousin, my colleague's office : une règle simple à automatiser."
+ },
+ "thereis": {
+  "name": "There is / there are",
+  "tip": "Décrire ce qui existe autour de soi : indispensable pour présenter un lieu, un bureau, une équipe."
+ },
+ "present3": {
+  "name": "Le présent simple et la 3e personne",
+  "tip": "He works, she doesn't like : le -s de la 3e personne est l'erreur n°1 des francophones, on la corrige par la pratique."
+ },
+ "adverbes": {
+  "name": "La place des adverbes",
+  "tip": "Always, never, quite : ils se placent avant le verbe, pas après comme en français."
+ },
+ "comparatif": {
+  "name": "Comparatifs et superlatifs",
+  "tip": "Cheaper, more expensive, the best : comparer des offres, des options, des résultats."
+ },
+ "futur": {
+  "name": "Parler du futur",
+  "tip": "Will, going to, présent continu : chaque forme a son usage (prévision, intention, programme)."
+ },
+ "politesse": {
+  "name": "Les formules de politesse",
+  "tip": "Would you like… ? Could you… ? Les formules qui rendent un échange professionnel naturel."
+ },
+ "preterit": {
+  "name": "Le prétérit",
+  "tip": "Raconter ce qui s'est passé : didn't want, called, took. Le temps du récit et du compte rendu."
+ },
+ "pastcont": {
+  "name": "Le passé continu",
+  "tip": "Was running, was raining : décrire une action en cours dans le passé, pour raconter avec précision."
+ },
+ "quantif": {
+  "name": "Some / any et les quantifieurs",
+  "tip": "There aren't any buses, some coffee : le choix dépend de la phrase (affirmative, négative, question)."
+ },
+ "gerinf": {
+  "name": "Gérondif ou infinitif",
+  "tip": "Like swimming, managed to get, feel comfortable staying : chaque verbe appelle une forme, on les apprend par familles."
+ },
+ "sodoi": {
+  "name": "Les réponses courtes (so do I, neither…)",
+  "tip": "Réagir naturellement à ce que dit l'autre : So do I, Neither was my sister."
+ },
+ "modaux": {
+  "name": "Les modaux (must, can, will)",
+  "tip": "Must be ill, can't be true : exprimer la certitude, la possibilité, l'obligation."
+ },
+ "presperf": {
+  "name": "Le present perfect",
+  "tip": "Have you ever… ? We've been friends : un temps sans équivalent exact en français, qu'on rend intuitif par l'usage."
+ },
+ "forsince": {
+  "name": "For / since (durée)",
+  "tip": "For many years, since 2020 : indiquer depuis combien de temps."
+ },
+ "reflexifs": {
+  "name": "Les pronoms réfléchis",
+  "tip": "Themselves, myself : une petite famille de mots à maîtriser."
+ },
+ "liaison": {
+  "name": "Les mots de liaison",
+  "tip": "So, because, the moment, and : relier ses idées pour construire un discours fluide."
+ },
+ "relatifs": {
+  "name": "Les pronoms relatifs",
+  "tip": "Which, who, where : préciser de quoi on parle sans alourdir la phrase."
+ },
+ "indirect": {
+  "name": "Le discours indirect",
+  "tip": "She asked him not to call : rapporter les paroles de quelqu'un, très utile en contexte professionnel."
+ },
+ "passif": {
+  "name": "La voix passive",
+  "tip": "English is spoken, he was taken : la forme privilégiée des e-mails, rapports et actualités."
+ },
+ "causatif": {
+  "name": "Les structures causatives",
+  "tip": "Have something done : faire faire quelque chose (had his hair cut, get the car repaired)."
+ },
+ "irreguliers": {
+  "name": "Les verbes irréguliers",
+  "tip": "Thought, spoke, taken : on les mémorise par la répétition en contexte, pas par cœur."
+ },
+ "pastperf": {
+  "name": "Le past perfect",
+  "tip": "Had planned, had put : situer une action avant une autre dans le passé."
+ },
+ "phrasal": {
+  "name": "Phrasal verbs et expressions",
+  "tip": "Look forward to, take after : des expressions qu'on ne peut pas traduire mot à mot."
+ },
+ "wish": {
+  "name": "Exprimer un regret (wish)",
+  "tip": "I wish I had left… : parler de ce qu'on aurait voulu faire autrement."
+ },
+ "letmake": {
+  "name": "Let / make + infinitif",
+  "tip": "They let us do it, she made me laugh : des structures très fréquentes à l'oral."
+ },
+ "verbesproches": {
+  "name": "Verbes proches (hear/listen, do/make)",
+  "tip": "Des paires que le français confond : on les distingue par des exemples concrets."
+ },
+ "edinging": {
+  "name": "Adjectifs en -ed / -ing",
+  "tip": "Interested ou interesting ? Bored ou boring ? Une nuance qui évite bien des malentendus."
+ },
+ "cond3": {
+  "name": "Le conditionnel passé",
+  "tip": "If I had studied, I wouldn't have failed : la structure la plus avancée du test."
+ },
+ "quantite": {
+  "name": "Expressions de quantité et d'intensité",
+  "tip": "At least, just, extra, very : le vocabulaire des consignes et descriptions précises."
+ },
+ "articles": {
+  "name": "Les articles",
+  "tip": "The, a, ou rien du tout : l'anglais n'utilise pas les articles comme le français."
+ },
+ "infbut": {
+  "name": "L'infinitif de but",
+  "tip": "To create a smile : dire pourquoi on fait quelque chose."
+ },
+ "presperfvspret": {
+  "name": "Prétérit ou present perfect",
+  "tip": "While he was living in Spain he gained… : choisir le bon temps selon que l'action est finie ou non."
+ },
+ "conditionnels": {
+  "name": "Les conditionnels (if)",
+  "tip": "If he didn't enjoy… : les phrases en if et leurs temps."
+ }
+}
