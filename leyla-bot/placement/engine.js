@@ -11,7 +11,7 @@ export const ITEMS = JSON.parse(fs.readFileSync(path.join(__dirname, "items.json
 export const SKILLS = JSON.parse(fs.readFileSync(path.join(__dirname, "skills.json"), "utf8"));
 
 export const CONFIG = {
-  MIN_Q: 14, MAX_Q: 18, SE_STOP: 0.33,
+  MIN_Q: 18, MAX_Q: 22, SE_STOP: 0.26,
   // Seuils de niveau (theta), calibrés sur la distribution des 1 237 candidats du TDN 90.
   CUTS: [-0.75, -0.10, 0.55, 1.20], LEVELS: ["A1", "A2", "B1", "B2", "C1"],
   B1_PLUS_THETA: 0.95, // au-dessus : « bon B1 », orienté Advanced
