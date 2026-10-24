@@ -1,0 +1,105 @@
+// Fonction CRM « leyla_test_niveau » — appelée par le serveur Leyla (Render, TEST_WEBHOOK_URL) à la fin de chaque test de niveau fait dans le chat.
+// Argument unique : crmAPIRequest (string). Exposée en API REST avec clé API (zapikey).
+// Prospect existant (même e-mail) → mise à jour des champs TDNA + note ; sinon création d'un prospect (Origine : Chat).
+nl = zoho.encryption.urlDecode("%0A");
+req = crmAPIRequest.toMap();
+body = req.get("body");
+data = Map();
+if(body != null && body.toString() != "")
+{
+	data = body.toString().toMap();
+}
+prenom = ifnull(data.get("First_Name"),"");
+nom = ifnull(data.get("Last_Name"),"");
+email = ifnull(data.get("Email"),"").trim();
+tel = ifnull(data.get("Phone"),"");
+dateTest = ifnull(data.get("TDNA_Date"),zoho.currentdate.toString("yyyy-MM-dd"));
+niveau = ifnull(data.get("TDNA_Niveau"),"");
+points = ifnull(data.get("TDNA_3_points_am_liorer"),"");
+desc = ifnull(data.get("Description"),"");
+site = ifnull(data.get("site"),"");
+if(email == "" && tel == "")
+{
+	return "erreur : ni e-mail ni téléphone, rien n'est créé";
+}
+// Lieu souhaité → liste « Centre souhaité (test) »
+centre = "";
+if(site.contains("ligne"))
+{
+	centre = "100% en ligne";
+}
+else if(site.contains("Rémy"))
+{
+	centre = "Saint Rémy de Provence";
+}
+else if(site.contains("Isle"))
+{
+	centre = "l'Isle sur la Sorgue";
+}
+else if(site.contains("Sophia"))
+{
+	centre = "Sophia Antipolis";
+}
+else if(site.contains("Paris"))
+{
+	centre = "Paris";
+}
+champs = Map();
+champs.put("TDNA_Date",dateTest);
+if(niveau != "")
+{
+	champs.put("TDNA_Niveau",niveau);
+}
+if(points != "")
+{
+	champs.put("TDNA_3_points_am_liorer",points);
+}
+if(centre != "")
+{
+	champs.put("Centre_souhaite_test",centre);
+}
+// Prospect existant ?
+existant = null;
+if(email != "")
+{
+	trouves = zoho.crm.searchRecords("Leads","(Email:equals:" + email + ")");
+	if(trouves != null && trouves.size() > 0)
+	{
+		existant = trouves.get(0);
+	}
+}
+note = "Test de niveau fait dans le chat (Leyla)" + nl + desc + nl + "Niveau : " + niveau + nl + "Points à améliorer :" + nl + points;
+if(existant != null)
+{
+	leadId = existant.get("id");
+	if(ifnull(existant.get("Phone"),"") == "" && tel != "")
+	{
+		champs.put("Phone",tel);
+	}
+	zoho.crm.updateRecord("Leads",leadId,champs);
+	n = Map();
+	n.put("Parent_Id",leadId);
+	n.put("se_module","Leads");
+	n.put("Note_Title","Test de niveau (chat) : " + niveau);
+	n.put("Note_Content",note);
+	zoho.crm.createRecord("Notes",n);
+	return "ok maj lead=" + leadId;
+}
+lead = champs;
+if(prenom != "")
+{
+	lead.put("First_Name",prenom);
+}
+lead.put("Last_Name",if(nom != "",nom,if(prenom != "",prenom,"Visiteur chat Leyla")));
+if(email != "")
+{
+	lead.put("Email",email);
+}
+if(tel != "")
+{
+	lead.put("Phone",tel);
+}
+lead.put("Lead_Source","Chat");
+lead.put("Description",note);
+resp = zoho.crm.createRecord("Leads",lead);
+return "ok nouveau lead=" + resp.get("id");
