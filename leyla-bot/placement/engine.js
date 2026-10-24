@@ -92,6 +92,18 @@ export function answer(state, itemIndex, correct) {
 }
 
 export const isDone = state => { const n = state.hist.length; return n >= CONFIG.MAX_Q || (n >= CONFIG.MIN_Q && state.se < CONFIG.SE_STOP); };
+// Score sur 100 : taux de réussite attendu sur la banque complète. Comparable d'un passage à l'autre
+// (même si les questions posées diffèrent), il montre la progression à l'intérieur d'un niveau.
+// Bornes : A1 < 25, A2 25–40, B1 40–55, B2 55–70, C1 ≥ 70.
+export const score = theta => Math.round(ITEMS.reduce((s, it) => s + P(it.a, it.b, theta), 0) / ITEMS.length * 100);
+export const SCORE_CUTS = CONFIG.CUTS.map(score);
+export function position(theta) {
+  const lv = level(theta), sc = score(theta), k = CONFIG.LEVELS.indexOf(lv);
+  const edges = [0, ...SCORE_CUTS, 100], lo = edges[k], hi = edges[k + 1], pct = (sc - lo) / (hi - lo);
+  if (k === CONFIG.LEVELS.length - 1) return `niveau ${lv} (à partir de ${lo})`;
+  const next = CONFIG.LEVELS[k + 1];
+  return pct < 0.34 ? `début du niveau ${lv}, ${hi - sc} points avant ${next}` : pct < 0.67 ? `milieu du niveau ${lv}, ${hi - sc} points avant ${next}` : `haut du niveau ${lv}, plus que ${hi - sc} points avant ${next}`;
+}
 export const level = theta => { let k = 0; for (const c of CONFIG.CUTS) if (theta >= c) k++; return CONFIG.LEVELS[k]; };
 
 // 3 points à améliorer : compétences ratées, d'abord celles à la portée du candidat, puis par nombre d'erreurs.
@@ -114,7 +126,7 @@ export function result(state) {
   const cats = {};
   for (const h of state.hist) { (cats[h.cat] ||= { n: 0, ok: 0 }); cats[h.cat].n++; if (h.correct) cats[h.cat].ok++; }
   return {
-    level: lv, title: LEVEL_TEXT[lv][0], description: LEVEL_TEXT[lv][1],
+    level: lv, score: score(state.theta), position: position(state.theta), title: LEVEL_TEXT[lv][0], description: LEVEL_TEXT[lv][1],
     theta: +state.theta.toFixed(2), se: +state.se.toFixed(2),
     nQuestions: state.hist.length, nCorrect: state.hist.filter(h => h.correct).length,
     categories: cats, points: improvementPoints(state, lv), courses: courses(lv, state.theta),

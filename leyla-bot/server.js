@@ -208,9 +208,9 @@ async function pushTestResult(result, visitor) {
   try {
     const payload = {
       First_Name: result.first, Last_Name: result.last || result.first, Email: result.email, Phone: result.phone,
-      TDNA_Date: result.at.slice(0, 10), TDNA_Niveau: result.level,
+      TDNA_Date: result.at.slice(0, 10), TDNA_Niveau: result.level, TDNA_Score: result.score,
       TDNA_3_points_am_liorer: result.points.map((p, i) => `${i + 1}. ${p}`).join("\n"),
-      Description: `Test de niveau adaptatif (chat Leyla) : ${result.level} (${result.nCorrect}/${result.nQuestions}, ${result.seconds}s) · Lieu souhaité : ${result.site}`,
+      Description: `Test de niveau adaptatif (chat Leyla) : ${result.level}, score ${result.score}/100 (${result.nCorrect}/${result.nQuestions}, ${result.seconds}s) · Lieu souhaité : ${result.site}`,
       site: result.site, theta: result.theta, answers: result.answers, page: visitor.current_page || "",
     };
     const r = await fetch(TEST_WEBHOOK_URL, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload) });

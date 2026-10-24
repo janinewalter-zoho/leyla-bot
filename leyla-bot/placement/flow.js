@@ -109,7 +109,7 @@ function finish(session, opts) {
   const who = L.site === "L'Isle-sur-la-Sorgue" ? "Alexandra, conseillère du centre de L'Isle-sur-la-Sorgue" : "Lucile, notre conseillère formation";
   const secs = Math.round((Date.now() - t.startedAt) / 1000);
 
-  const m1 = `Bravo ${L.first}, c'est terminé !\n\n🎯 Votre niveau : ${r.level} · ${r.title}\n${r.description}\n\n(${r.nCorrect} bonne${r.nCorrect > 1 ? "s" : ""} réponse${r.nCorrect > 1 ? "s" : ""} sur ${r.nQuestions})`;
+  const m1 = `Bravo ${L.first}, c'est terminé !\n\n🎯 Votre niveau : ${r.level} · ${r.title}\nScore : ${r.score}/100 (${r.position}).\n${r.description}\n\n(${r.nCorrect} bonne${r.nCorrect > 1 ? "s" : ""} réponse${r.nCorrect > 1 ? "s" : ""} sur ${r.nQuestions})`;
   const m2 = `3 points à améliorer avec English 4 French, d'après vos réponses :\n` + r.points.map((p, k) => `${k + 1}. ${p.name}${p.errors ? ` (${p.errors} erreur${p.errors > 1 ? "s" : ""})` : ""} — ${p.tip}`).join("\n");
   const fmt = L.site === "100 % en ligne" ? "100 % en ligne, avec un formateur en direct" : `en centre à ${L.site}`;
   const m3 = `Trois parcours ${fmt}, selon votre objectif :\n` + r.courses.map(c => `• ${c.title} (${c.why}) : ${c.url}`).join("\n") +
@@ -119,7 +119,7 @@ function finish(session, opts) {
   delete session.test;
   session.testResult = result;
   // Note de contexte pour Leyla : elle continue la conversation en connaissant le résultat.
-  session.messages.push({ role: "user", content: `[Test de niveau effectué dans le chat] Prénom : ${L.first} ${L.last}. E-mail : ${L.email}. Téléphone : ${L.phone}. Lieu souhaité : ${L.site}. Niveau estimé : ${r.level} (${r.nCorrect}/${r.nQuestions}). Points à travailler : ${result.points.join(" ; ")}.` });
+  session.messages.push({ role: "user", content: `[Test de niveau effectué dans le chat] Prénom : ${L.first} ${L.last}. E-mail : ${L.email}. Téléphone : ${L.phone}. Lieu souhaité : ${L.site}. Niveau estimé : ${r.level}, score ${r.score}/100 (${r.position} ; ${r.nCorrect}/${r.nQuestions}). Points à travailler : ${result.points.join(" ; ")}.` });
   session.messages.push({ role: "assistant", content: `Merci ${L.first}, votre niveau estimé est ${r.level}. Je reste disponible pour vos questions ou pour organiser un rendez-vous.` });
 
   return { replies: [m1, m2, m3], suggestions: ["Réserver 15 minutes", "Les tarifs CPF", "J'ai une question"], done: true, result };

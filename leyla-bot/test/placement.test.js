@@ -8,6 +8,11 @@ import { startTest, stepTest, wantsTest, DK } from "../placement/flow.js";
 const P = (a, b, t) => 1 / (1 + Math.exp(-a * (t - b)));
 const LV = E.CONFIG.LEVELS;
 
+test("score : bornes de niveau 25 / 40 / 55 / 70 et croissance avec theta", () => {
+  assert.deepEqual(E.SCORE_CUTS, [25, 40, 55, 70]);
+  assert.ok(E.score(-1) < E.score(0) && E.score(0) < E.score(1));
+});
+
 test("banque : 74 questions, chaque bonne réponse est dans les options, chaque compétence est décrite", () => {
   assert.equal(E.ITEMS.length, 74);
   for (const it of E.ITEMS) { assert.ok(it.opts[it.ans] !== undefined, `Q${it.id}`); assert.ok(E.SKILLS[it.s], `skill ${it.s}`); }
@@ -69,6 +74,8 @@ test("déroulé chat : coordonnées, questions, stop, résultat, parcours et RDV
   const r = out.result;
   assert.ok(r.nQuestions >= 14 && r.nQuestions <= 18);
   assert.ok(LV.includes(r.level));
+  assert.ok(r.score >= 0 && r.score <= 100 && /niveau/.test(r.position));
+  assert.match(out.replies[0], /Score : \d+\/100/);
   assert.equal(r.points.length, 3);
   assert.equal(r.site, "100 % en ligne");
   assert.equal(out.replies.length, 3);
