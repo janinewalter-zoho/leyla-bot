@@ -102,7 +102,8 @@ export function position(theta) {
   const edges = [0, ...SCORE_CUTS, 100], lo = edges[k], hi = edges[k + 1], pct = (sc - lo) / (hi - lo);
   if (k === CONFIG.LEVELS.length - 1) return `niveau ${lv} (à partir de ${lo})`;
   const next = CONFIG.LEVELS[k + 1];
-  return pct < 0.34 ? `début du niveau ${lv}, ${hi - sc} points avant ${next}` : pct < 0.67 ? `milieu du niveau ${lv}, ${hi - sc} points avant ${next}` : `haut du niveau ${lv}, plus que ${hi - sc} points avant ${next}`;
+  const reste = `${hi - sc} point${hi - sc > 1 ? "s" : ""} avant ${next}`;
+  return pct < 0.34 ? `début du niveau ${lv}, ${reste}` : pct < 0.67 ? `milieu du niveau ${lv}, ${reste}` : `haut du niveau ${lv}, plus que ${reste}`;
 }
 export const level = theta => { let k = 0; for (const c of CONFIG.CUTS) if (theta >= c) k++; return CONFIG.LEVELS[k]; };
 
