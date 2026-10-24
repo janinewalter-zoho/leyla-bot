@@ -1,12 +1,13 @@
 TESTS DE NIVEAU ET NIVEAUX D'ANGLAIS
 
 LES TESTS
-Test de niveau adaptatif (TDNA) : 14 à 18 questions, 5 à 8 minutes, résultat immédiat (A1 à C1). C'est le test proposé par Leyla, directement dans le chat : il s'adapte aux réponses (plus difficile si on réussit, plus simple si on hésite) et il est construit à partir des 90 questions du TDN90. À la fin, il donne le niveau, 3 points à améliorer et les parcours conseillés.
-Test de positionnement complet (TDN90) : 90 questions. Il est fait au démarrage de la formation et fixe le niveau officiel inscrit dans la convention. Il est repassé en fin de formation pour mesurer les progrès. Lien : english4french.typeform.com/TDN90E4F
+Test de niveau adaptatif d'entrée (TDNA Entrée) : 14 à 18 questions, 5 à 8 minutes, résultat immédiat (A1 à C1) avec un score sur 100. C'est le test proposé par Leyla, directement dans le chat : il s'adapte aux réponses (plus difficile si on réussit, plus simple si on hésite) et il est construit à partir des 90 questions de l'ancien TDN90. À la fin, il donne le niveau, 3 points à améliorer et les parcours conseillés. C'est ce test qui fixe le niveau officiel inscrit dans le devis et la convention de formation.
+Évaluations de mi-parcours et de fin de parcours (TDNA Mi, TDNA Fin) : même test, version plus complète (24 à 28 questions, 10 à 12 minutes), envoyé par la conseillère ou le formateur pendant la formation pour mesurer la progression par rapport au niveau d'entrée. Ils ne sont pas proposés aux prospects.
+L'ancien test TDN90 (90 questions, Typeform) n'est plus utilisé pour les nouvelles conventions.
 Test d'anglais professionnel (business) : pour une personne qui a un besoin professionnel précis et un niveau au moins intermédiaire.
 
 LE RÉSULTAT DU TEST DE NIVEAU ADAPTATIF
-C'est une première estimation, pas le niveau officiel. Le niveau officiel est établi par le test de 90 questions au démarrage.
+Le niveau obtenu (A1 à C1) est le niveau officiel d'entrée en formation, celui qui figure dans le devis et la convention. Le score sur 100 précise la position dans le niveau (A1 < 25, A2 25-40, B1 40-55, B2 55-70, C1 70 et plus) et permet de mesurer la progression en cours et en fin de formation. Un bilan oral avec le formateur complète ce résultat pour la compréhension et l'expression orales.
 Si un prospect a déjà fait le test avec Leyla dans le chat, son niveau estimé est connu (A1, A2, B1, B2 ou C1).
 Le test de niveau ne se fait pas par téléphone pendant l'appel : on peut inviter la personne à le faire dans le chat, ou la conseillère l'organise.
 Pour une demande entreprise, le test de chaque salarié est organisé par la conseillère.
