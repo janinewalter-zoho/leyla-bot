@@ -13,7 +13,9 @@ export const DK = "Je ne sais pas";
 const STOP_RE = /^(stop|arr[êe]ter?( le test)?|quitter|annuler|abandonner)\b/i;
 const DK_RE = /^(\?|jsp|je (ne )?sais pas|aucune id[ée]e|pass(e|er)?)\s*[.!]?$/i;
 
-export const wantsTest = text => /\b(test|tester|[ée]valuer)\b.*\b(niveau|anglais)\b|\bmon niveau\b|\bfaire le test\b/i.test(text || "");
+// Déclenché seulement par une demande explicite de test (pas « améliorer mon niveau », pas le TOEIC).
+const TEST_RE = /\btest(s)? de niveau\b|\b(faire|passer|lancer|commencer|refaire)\b.{0,20}\btest\b|\b(tester|[ée]valuer|v[ée]rifier|conna[iî]tre)\b.{0,12}\bmon niveau\b|quel est mon niveau/i;
+export const wantsTest = text => TEST_RE.test(text || "") && !/toeic|toefl|ielts|linguaskill|bright|bulats|cambridge|90 questions|tdn90/i.test(text || "");
 
 const norm = s => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[’']/g, "'").replace(/\s+/g, " ").trim();
 
@@ -39,7 +41,7 @@ export function startTest(session, visitor = {}) {
 function askNextLead(t) {
   const L = t.lead;
   if (!L.first) { t.ask = "name"; return reply("Avec plaisir ! Le test prend 5 à 8 minutes : 14 à 18 questions qui s'adaptent à vos réponses, et votre niveau s'affiche à la fin.\n\nPour commencer, quel est votre prénom et votre nom ?"); }
-  if (!L.email) { t.ask = "email"; return reply(`Merci ${L.first}. À quelle adresse e-mail puis-je vous envoyer votre résultat ?`); }
+  if (!L.email) { t.ask = "email"; return reply(`Merci ${L.first}. Quelle est votre adresse e-mail, pour que notre conseillère puisse vous recontacter avec votre résultat ?`); }
   if (!L.phone) { t.ask = "phone"; return reply("Et votre numéro de téléphone, pour qu'une conseillère puisse vous rappeler si vous le souhaitez ?"); }
   if (!L.site) { t.ask = "site"; return reply("Dernière question avant le test : où souhaitez-vous vous former ?", ["100 % en ligne", "Saint-Rémy-de-Provence", "Autre centre"]); }
   return startQuestions(t);
