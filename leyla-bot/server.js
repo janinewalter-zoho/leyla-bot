@@ -25,6 +25,8 @@ const SIQ_PUBLIC_KEY = process.env.SIQ_PUBLIC_KEY || "";   // clé publique « S
 const CALLBACK_URL = process.env.CALLBACK_URL || ""; // fonction CRM leyla_rappel (clé API) : demandes de rappel
 const LEAD_WEBHOOK_URL = process.env.LEAD_WEBHOOK_URL || ""; // Zoho Flow / CRM : reçoit le profil en fin de chat (optionnel)
 const TEST_WEBHOOK_URL = process.env.TEST_WEBHOOK_URL || ""; // Zoho Flow / CRM : reçoit le résultat du test de niveau fait dans le chat (optionnel)
+// Page web « Le Profiling » : le serveur relaie le résultat vers la fonction CRM e4f_profiling_page (la clé API reste ici, jamais dans la page).
+const PROFILING_URL = process.env.PROFILING_URL || TEST_WEBHOOK_URL.replace("/functions/leyla_test_niveau/", "/functions/e4f_profiling_page/");
 const MODEL_TIMEOUT_MS = Number(process.env.MODEL_TIMEOUT_MS || 4600);
 const MAX_TURNS = 24;
 const SESSION_TTL_MS = 2 * 60 * 60 * 1000;
@@ -286,6 +288,42 @@ const server = http.createServer((req, res) => {
     });
     return;
   }
+  if (url.pathname === "/profiling" && (req.method === "POST" || req.method === "OPTIONS")) return handleProfiling(req, res);
   send(404, { error: "not found" });
 });
+
+// ---------- Page « Le Profiling » → CRM ----------
+const PROFILING_CODES = ["VL", "LM", "VS", "MR", "KIN", "INTER", "INTRA", "NAT"];
+const PROFILING_CENTRES = ["100% en ligne", "Saint Rémy de Provence", "l'Isle sur la Sorgue", "Sophia Antipolis", "Paris", ""];
+const profilingHits = new Map(); // limite : 5 envois par adresse IP et par 10 minutes
+function handleProfiling(req, res) {
+  const origin = req.headers.origin || "";
+  const headers = { "content-type": "application/json; charset=utf-8", "access-control-allow-origin": origin || "*", "access-control-allow-methods": "POST, OPTIONS", "access-control-allow-headers": "content-type", vary: "Origin" };
+  const reply = (status, obj) => { res.writeHead(status, headers); res.end(JSON.stringify(obj)); };
+  if (req.method === "OPTIONS") return reply(204, {});
+  const ip = String(req.headers["x-forwarded-for"] || req.socket.remoteAddress || "").split(",")[0].trim();
+  const now = Date.now(), recent = (profilingHits.get(ip) || []).filter(t => now - t < 10 * 60 * 1000);
+  if (recent.length >= 5) return reply(429, { error: "trop d'envois, réessayez plus tard" });
+  recent.push(now); profilingHits.set(ip, recent);
+  const chunks = [];
+  req.on("data", c => { chunks.push(c); if (Buffer.concat(chunks).length > 20000) req.destroy(); });
+  req.on("end", async () => {
+    let d;
+    try { d = JSON.parse(Buffer.concat(chunks).toString("utf8")); } catch { return reply(400, { error: "JSON invalide" }); }
+    const str = (v, n) => String(v ?? "").trim().slice(0, n);
+    const email = str(d.email, 120).toLowerCase();
+    const scores = {};
+    for (const c of PROFILING_CODES) { const v = Number(d.scores?.[c]); if (!Number.isInteger(v) || v < 0 || v > 9) return reply(400, { error: `score ${c} invalide` }); scores[c] = v; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return reply(400, { error: "e-mail invalide" });
+    const centre = PROFILING_CENTRES.includes(d.centre) ? d.centre : "";
+    const payload = { first: str(d.first, 60), last: str(d.last, 80), email, phone: str(d.phone, 30), interest: str(d.interest, 30), centre, scores, dominant: str(d.dominant, 120) };
+    if (!PROFILING_URL) { console.log(`[profiling] ${email} (PROFILING_URL absente : non transmis)`); return reply(202, { ok: false }); }
+    try {
+      const r = await fetch(PROFILING_URL, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload) });
+      const t = await r.text();
+      console.log(`[profiling] ${email} ${payload.dominant} → ${r.status} ${t.slice(0, 100)}`);
+      reply(r.ok ? 200 : 502, { ok: r.ok });
+    } catch (e) { console.error("profiling", e.message); reply(502, { ok: false }); }
+  });
+}
 server.listen(PORT, () => console.log(`Leyla webhook prêt sur le port ${PORT} (modèle ${MODEL})`));

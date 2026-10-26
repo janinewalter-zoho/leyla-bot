@@ -1,0 +1,106 @@
+string standalone.e4f_profiling_page(String crmAPIRequest)
+{
+	// E4F – Profiling : résultat envoyé par la page web « Le Profiling » (API REST, clé API).
+	// Corps JSON : first, last, email, phone, interest, centre, date, scores{VL..NAT}, dominant.
+	// Met à jour le Contact (par e-mail), sinon le Prospect, sinon crée un Prospect (origine Test profiling).
+	req = crmAPIRequest.toMap();
+	body = req.get("body");
+	if(body == null || body.toString().trim() == "")
+	{
+		return "erreur : corps vide";
+	}
+	data = body.toString().toMap();
+	email = ifnull(data.get("email"),"").toString().toLowerCase().trim();
+	if(email == "" || !email.contains("@"))
+	{
+		return "erreur : e-mail absent, rien n'est créé";
+	}
+	prenom = ifnull(data.get("first"),"").toString().trim();
+	nom = ifnull(data.get("last"),"").toString().trim();
+	tel = ifnull(data.get("phone"),"").toString().trim();
+	interet = ifnull(data.get("interest"),"").toString();
+	centre = ifnull(data.get("centre"),"").toString();
+	dominant = ifnull(data.get("dominant"),"").toString();
+	scores = data.get("scores");
+	if(scores == null)
+	{
+		return "erreur : scores absents";
+	}
+	scores = scores.toString().toMap();
+	champs = Map();
+	champs.put("Date_test_profiling",zoho.currentdate);
+	for each  c in {"VL","LM","VS","MR","KIN","INTER","INTRA","NAT"}
+	{
+		v = ifnull(scores.get(c),"0").toString().toLong();
+		if(v < 0 || v > 9)
+		{
+			return "erreur : score " + c + " hors limites";
+		}
+		champs.put("Profil_" + c,v);
+	}
+	if(dominant.length() > 250)
+	{
+		dominant = dominant.subString(0,250);
+	}
+	champs.put("Profil_dominant",dominant);
+	if(centre != "")
+	{
+		champs.put("Centre_souhaite_test",centre);
+	}
+	if(interet == "Très intéressé")
+	{
+		champs.put("Interet_formation","Intéressé");
+	}
+	else if(interet == "Pourquoi pas")
+	{
+		champs.put("Interet_formation","Peut-être");
+	}
+	else if(interet == "Pour le plaisir")
+	{
+		champs.put("Interet_formation","Pas intéressé");
+	}
+	cible = "";
+	cibleId = "";
+	contacts = zoho.crm.searchRecords("Contacts","(Email:equals:" + email + ")");
+	if(contacts.size() > 0)
+	{
+		cible = "Contacts";
+		cibleId = contacts.get(0).get("id");
+	}
+	else
+	{
+		leads = zoho.crm.searchRecords("Leads","(Email:equals:" + email + ")");
+		if(leads.size() > 0)
+		{
+			cible = "Leads";
+			cibleId = leads.get(0).get("id");
+		}
+	}
+	if(cible != "")
+	{
+		if(tel != "")
+		{
+			existant = zoho.crm.getRecordById(cible,cibleId.toLong());
+			if(ifnull(existant.get("Phone"),"") == "")
+			{
+				champs.put("Phone",tel);
+			}
+		}
+		if(cible == "Contacts")
+		{
+			champs.remove("Interet_formation");
+		}
+		zoho.crm.updateRecord(cible,cibleId.toLong(),champs);
+		return "ok maj " + cible + " " + cibleId;
+	}
+	champs.put("First_Name",prenom);
+	champs.put("Last_Name",if(nom != "",nom,email));
+	champs.put("Email",email);
+	if(tel != "")
+	{
+		champs.put("Phone",tel);
+	}
+	champs.put("Lead_Source","Test profiling");
+	r = zoho.crm.createRecord("Leads",champs);
+	return "ok nouveau prospect " + r.get("id");
+}
