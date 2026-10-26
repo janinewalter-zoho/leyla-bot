@@ -20,6 +20,7 @@ const MODEL = process.env.CLAUDE_MODEL || "claude-haiku-5-5"; // rapide : budget
 const BOOKING_URL = process.env.BOOKING_URL || "https://english4french.com/rendez-vous-conseilleres-formation";
 const BOOKING_URL_ISLE = process.env.BOOKING_URL_ISLE || "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1afbfwpzbOZDsHUvGYYj2exb3EdJQlvE4U-Y1p3VgNZ35nJxUphjwRfyBHnPw6rma4Q4VIE_YY"; // Alexandra, centre de L'Isle-sur-la-Sorgue (particuliers)
 const TEST_URL = process.env.TEST_URL || "https://english4french.typeform.com/BannieresiteE4F";
+const PROFILING_PAGE_URL = process.env.PROFILING_PAGE_URL || "https://english4french.com/le-profiling"; // page « Le Profiling »
 const FORWARD_OPERATORS = (process.env.FORWARD_OPERATORS || "").split(",").map(s => s.trim()).filter(Boolean);
 const SIQ_PUBLIC_KEY = process.env.SIQ_PUBLIC_KEY || "";   // clé publique « Secure your webhook » (optionnel)
 const CALLBACK_URL = process.env.CALLBACK_URL || ""; // fonction CRM leyla_rappel (clé API) : demandes de rappel
@@ -43,6 +44,7 @@ function loadKnowledge() {
 const SYSTEM_PROMPT = fs.readFileSync(path.join(__dirname, "prompt.md"), "utf8")
   .replaceAll("{{BOOKING_URL}}", BOOKING_URL)
   .replaceAll("{{TEST_URL}}", TEST_URL)
+  .replaceAll("{{PROFILING_URL}}", PROFILING_PAGE_URL)
   .replace("{{KNOWLEDGE}}", loadKnowledge());
 
 // ---------- Horaires des centres (pour « Appeler maintenant ») ----------

@@ -15,7 +15,7 @@ const DK_RE = /^(\?|jsp|je (ne )?sais pas|aucune id[ée]e|pass(e|er)?)\s*[.!]?$/
 
 // Déclenché seulement par une demande explicite de test (pas « améliorer mon niveau », pas le TOEIC).
 const TEST_RE = /\btest(s)? de niveau\b|\b(faire|passer|lancer|commencer|refaire)\b.{0,20}\btest\b|\b(tester|[ée]valuer|v[ée]rifier|conna[iî]tre)\b.{0,12}\bmon niveau\b|quel est mon niveau/i;
-export const wantsTest = text => TEST_RE.test(text || "") && !/toeic|toefl|ielts|linguaskill|bright|bulats|cambridge|90 questions|tdn90/i.test(text || "");
+export const wantsTest = text => TEST_RE.test(text || "") && !/toeic|toefl|ielts|linguaskill|bright|bulats|cambridge|90 questions|tdn90|profil/i.test(text || "");
 
 const norm = s => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[’']/g, "'").replace(/\s+/g, " ").trim();
 
