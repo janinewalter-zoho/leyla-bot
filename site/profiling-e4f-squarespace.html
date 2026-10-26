@@ -1,0 +1,475 @@
+<!-- E4F – Le Profiling (page web) : bloc de code Squarespace. Source : claude/profiling-e4f-squarespace.html -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap">
+<style>
+
+/* Même identité que le test de niveau E4F : une colonne centrée, une carte à la fois ; le résultat se lit de haut en bas. */
+#e4f-prof{
+  --bg:#f6f4ee; --surface:#ffffff; --fg:#1d2433; --muted:#5d6675; --line:#dcd7cc;
+  --accent:#0f4c81; --accent-ink:#ffffff; --accent-soft:#e3edf6;
+  --ok:#1f7a4d; --ok-soft:#e1f2e8; --warn:#b4541f;
+  --logo-filter:none; --yes-bg:#dcf2e1; --yes-line:#7cc38f; --yes-ink:#1c5b2e; --no-bg:#fde5d0; --no-line:#eea36b; --no-ink:#8a3c0c;
+  --display:"Fraunces",Georgia,serif; --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+}
+#e4f-prof *{box-sizing:border-box}
+#e4f-prof [hidden]{display:none!important}
+#e4f-prof{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.5;
+  padding-block:24px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+#e4f-prof .wrap{max-width:660px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+#e4f-prof .brand{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+#e4f-prof .brand{align-items:center}
+#e4f-prof .logo{height:46px;width:auto;max-width:70%;filter:var(--logo-filter)}
+#e4f-prof .brand span{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+#e4f-prof .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px 24px;display:flex;flex-direction:column;gap:18px}
+#e4f-prof h1{font-family:var(--display);font-weight:700;font-size:34px;line-height:1.1;margin:0;text-wrap:balance}
+#e4f-prof h2{font-family:var(--display);font-weight:600;font-size:24px;line-height:1.2;margin:0;text-wrap:balance}
+#e4f-prof .lead{font-size:19px;line-height:1.45;border-left:4px solid var(--accent);padding-left:14px}
+#e4f-prof .lead strong{color:var(--accent)}
+#e4f-prof h3{font-size:15px;font-weight:700;margin:0;text-transform:uppercase;letter-spacing:.08em;color:var(--accent)}
+#e4f-prof p{margin:0}
+#e4f-prof .muted{color:var(--muted)}
+#e4f-prof ul.facts{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+#e4f-prof ul.facts li{display:grid;justify-items:center;text-align:center;gap:8px;font-size:15px;line-height:1.35}
+#e4f-prof ul.facts .ico{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)}
+#e4f-prof ul.facts li:nth-child(2) .ico{background:var(--no-bg);color:var(--no-ink)}
+#e4f-prof ul.facts li:nth-child(3) .ico{background:var(--yes-bg);color:var(--yes-ink)}
+#e4f-prof ul.facts .ico svg{width:34px;height:34px}
+#e4f-prof ul.facts strong{display:block;font-family:var(--display);font-size:20px;line-height:1.15}
+@media(max-width:480px){#e4f-prof ul.facts{grid-template-columns:1fr}#e4f-prof ul.facts li{grid-template-columns:56px 1fr;justify-items:start;text-align:left;align-items:center;gap:14px}#e4f-prof ul.facts .ico{width:56px;height:56px}}
+#e4f-prof .btn{appearance:none;border:0;border-radius:10px;padding:14px 22px;font:600 17px var(--body);cursor:pointer;background:var(--accent);color:var(--accent-ink);text-decoration:none;display:inline-block;transition:transform .08s}
+#e4f-prof .btn:active{transform:scale(.98)}
+#e4f-prof .btn:focus-visible,#e4f-prof .yn:focus-visible,#e4f-prof .link:focus-visible,#e4f-prof input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+#e4f-prof .btn.secondary{background:var(--accent-soft);color:var(--accent)}
+#e4f-prof .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+#e4f-prof .row.end{justify-content:flex-end}
+#e4f-prof .row.between{justify-content:space-between}
+#e4f-prof label{display:grid;gap:6px;font-weight:600;font-size:15px}
+#e4f-prof input{font:400 17px var(--body);padding:11px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg);width:100%;min-width:0}
+#e4f-prof .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:480px){#e4f-prof .grid2{grid-template-columns:1fr}#e4f-prof h1{font-size:28px}}
+#e4f-prof .group{display:grid;gap:8px}
+#e4f-prof .group>p{font-weight:600;font-size:15px}
+#e4f-prof .chips{display:flex;flex-wrap:wrap;gap:8px}
+#e4f-prof .chip{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line);border-radius:999px;padding:8px 14px;font-weight:400;font-size:15px;cursor:pointer;background:var(--bg)}
+#e4f-prof .chip:has(input:checked){border-color:var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:600}
+#e4f-prof .chip:has(input:focus-visible){outline:3px solid var(--accent);outline-offset:2px}
+#e4f-prof .chip input{width:auto;margin:0;accent-color:var(--accent)}
+#e4f-prof .err{color:var(--warn);font-size:14px;min-height:1.2em}
+#e4f-prof .progress{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+#e4f-prof .progress i{display:block;height:100%;background:var(--accent);width:0;transition:width .25s}
+#e4f-prof .qmeta{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-variant-numeric:tabular-nums}
+#e4f-prof .stmt{font-family:var(--display);font-weight:600;font-size:26px;line-height:1.3;min-height:3.9em;display:flex;align-items:center;text-wrap:balance}
+#e4f-prof .yns{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#e4f-prof .yn{appearance:none;border:2px solid;border-radius:12px;padding:18px 14px;font:700 20px var(--body);cursor:pointer;display:grid;gap:2px;justify-items:center;transition:filter .1s}
+#e4f-prof .yn small{font-weight:400;font-size:13px}
+#e4f-prof .yn.y{background:var(--yes-bg);border-color:var(--yes-line);color:var(--yes-ink)}
+#e4f-prof .yn.n{background:var(--no-bg);border-color:var(--no-line);color:var(--no-ink)}
+#e4f-prof .yn:hover{filter:brightness(.96)}
+#e4f-prof .hint{font-size:15px;font-weight:600;color:var(--accent)}
+#e4f-prof .timer{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+#e4f-prof .timer span{display:block;height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+#e4f-prof .timer span i{display:block;height:100%;width:100%;background:var(--no-line);transform-origin:left}
+#e4f-prof .round2{font-size:15px;background:var(--accent-soft);color:var(--accent);border-radius:8px;padding:10px 12px}
+#e4f-prof .kbd{font-size:13px;color:var(--muted)}
+/* Résultat */
+#e4f-prof .dom{display:grid;gap:10px}
+#e4f-prof .dom .eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+#e4f-prof .dom h1{color:var(--accent)}
+#e4f-prof .dom .sub{font-size:15px;color:var(--muted)}
+#e4f-prof .bars{display:grid;gap:9px}
+#e4f-prof .bar{display:grid;grid-template-columns:minmax(0,11.5em) 1fr 2.2em;align-items:center;gap:10px;font-size:15px}
+#e4f-prof .bar span{min-width:0}
+#e4f-prof .bar i{display:block;height:12px;border-radius:6px;background:var(--line);position:relative;overflow:hidden}
+#e4f-prof .bar i b{position:absolute;inset:0 auto 0 0;background:var(--muted);border-radius:6px}
+#e4f-prof .bar.top i b{background:var(--accent)}
+#e4f-prof .bar.top span{font-weight:700}
+#e4f-prof .bar em{font-style:normal;font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+@media(max-width:420px){#e4f-prof .bar{grid-template-columns:minmax(0,8.5em) 1fr 2.2em;font-size:14px}}
+#e4f-prof .tips{margin:0;padding:0;list-style:none;display:grid;gap:12px}
+#e4f-prof .tips li{display:grid;grid-template-columns:22px 1fr;gap:10px;align-items:start}
+#e4f-prof .tips li::before{content:"";width:12px;height:12px;border-radius:3px;background:var(--accent);margin-top:7px}
+#e4f-prof .tips.teacher li::before{border-radius:50%;background:var(--ok)}
+#e4f-prof .others{display:grid;gap:14px}
+#e4f-prof .other{display:grid;gap:4px;border-top:1px solid var(--line);padding-top:14px}
+#e4f-prof .other b{font-size:17px}
+#e4f-prof .other p{font-size:15px;color:var(--muted)}
+#e4f-prof .note{font-size:14px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+#e4f-prof .note a{color:var(--accent)}
+#e4f-prof .saved{font-size:14px;color:var(--ok);background:var(--ok-soft);border-radius:8px;padding:10px 12px}
+@media(prefers-reduced-motion:reduce){#e4f-prof .progress i,#e4f-prof .btn{transition:none}}
+
+#e4f-prof{max-width:none;padding-block:8px}
+#e4f-prof .logo{display:none}
+#e4f-prof button,#e4f-prof input{font-family:var(--body);letter-spacing:normal;text-transform:none}
+#e4f-prof h1,#e4f-prof h2{letter-spacing:-.01em;text-transform:none}
+
+</style>
+<div id="e4f-prof"><div class="wrap">
+  <div class="brand"><span>Profil d'apprentissage</span></div>
+
+  <section class="card" id="s-intro">
+    <h1>Le Profiling</h1>
+    <p class="lead">C'est la base de chaque formation English 4 French. Experts en pédagogie, nous partons de votre profil pour adapter les cours à votre façon d'apprendre, et vous permettre <strong>enfin</strong> de progresser en anglais.</p>
+    <p class="muted"><strong>Comment apprenez-vous le mieux ?</strong> Ce test repère vos formes d'intelligence dominantes, d'après la théorie des intelligences multiples d'Howard Gardner. Vous découvrez comment apprendre l'anglais avec vos points forts, et comment votre formateur adaptera ses cours à votre profil.</p>
+    <ul class="facts">
+      <li><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="7" height="7" rx="1.5"/><path d="m4.8 7.6 1.5 1.5 2.6-2.8"/><rect x="3" y="13" width="7" height="7" rx="1.5"/><path d="m5 15 3 3m0-3-3 3"/><path d="M13 7.5h8M13 16.5h8"/></svg></span><span><strong>72 affirmations</strong>Oui ou non, en 7 secondes maximum chacune</span></li>
+      <li><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.5M9.5 2.5h5M12 2.5V6M18.5 6.5l1.5-1.5"/></svg></span><span><strong>5 à 8 minutes</strong>Sans inscription ni téléchargement</span></li>
+      <li><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span><span><strong>Résultat immédiat</strong>Votre profil, vos 8 scores et des conseils concrets</span></li>
+    </ul>
+    <p class="muted"><strong>Répondez immédiatement, sans réfléchir.</strong> Votre première réaction est la plus juste. Ce test est la photographie d'un instant : répondez par rapport à qui vous êtes aujourd'hui. Il n'évalue pas votre niveau d'anglais.</p>
+    <div class="row end"><button class="btn" id="b-start" type="button">Commencer</button></div>
+  </section>
+
+  <section class="card" id="s-form" hidden>
+    <h2>Avant de commencer</h2>
+    <p class="muted">Ces informations nous permettent de vous transmettre votre profil et, si vous le souhaitez, de vous proposer une formation adaptée.</p>
+    <form id="lead" novalidate>
+      <div class="grid2">
+        <label>Prénom<input id="f-first" autocomplete="given-name" required></label>
+        <label>Nom<input id="f-last" autocomplete="family-name" required></label>
+      </div>
+      <label style="margin-top:14px">E-mail<input id="f-email" type="email" autocomplete="email" required></label>
+      <div class="group" style="margin-top:14px">
+        <p>Seriez-vous intéressé(e) par une formation d'anglais ?</p>
+        <div class="chips">
+          <label class="chip"><input type="radio" name="interest" value="Très intéressé" id="int-1">Très intéressé(e)</label>
+          <label class="chip"><input type="radio" name="interest" value="Pourquoi pas" id="int-2">Pourquoi pas</label>
+          <label class="chip"><input type="radio" name="interest" value="Pour le plaisir" id="int-3">Non, je fais le test pour le plaisir</label>
+        </div>
+      </div>
+      <div class="group" id="site-wrap" style="margin-top:14px">
+        <p>Quel lieu de formation vous intéresse ?</p>
+        <div class="chips">
+          <label class="chip"><input type="radio" name="site" value="Saint-Rémy-de-Provence" id="site-1">Saint-Rémy-de-Provence</label>
+          <label class="chip"><input type="radio" name="site" value="L'Isle-sur-la-Sorgue" id="site-2">L'Isle-sur-la-Sorgue</label>
+          <label class="chip"><input type="radio" name="site" value="Paris 11e" id="site-3">Paris 11e</label>
+          <label class="chip"><input type="radio" name="site" value="Sophia Antipolis" id="site-4">Sophia Antipolis</label>
+          <label class="chip"><input type="radio" name="site" value="100 % en ligne" id="site-5">100 % en ligne</label>
+        </div>
+      </div>
+      <p class="err" id="f-err"></p>
+      <div class="row end"><button class="btn" type="submit">Démarrer le test</button></div>
+    </form>
+  </section>
+
+  <section class="card" id="s-q" hidden>
+    <div class="qmeta"><span id="q-count">0 réponse sur 72</span><span id="q-pct">0 %</span></div>
+    <div class="progress"><i id="q-bar"></i></div>
+    <p class="round2" id="q-round2" hidden>Dernière ligne droite : voici les affirmations laissées passer. Prenez le temps de répondre à chacune.</p>
+    <p class="hint" id="q-hint">Répondez tout de suite, sans réfléchir : votre première réaction est la bonne.</p>
+    <p class="stmt" id="q-text"></p>
+    <div class="timer" id="q-timer"><span><i id="q-tbar"></i></span><b id="q-tsec">7 s</b></div>
+    <div class="yns">
+      <button class="yn y" type="button" id="b-yes">Oui<small>c'est tout moi</small></button>
+      <button class="yn n" type="button" id="b-no">Non<small>pas vraiment</small></button>
+    </div>
+    <p class="kbd">Raccourcis clavier : O pour oui, N pour non. Sans réponse au bout de 7 secondes, l'affirmation revient à la fin du test.</p>
+  </section>
+
+  <section class="card" id="s-phone" hidden>
+    <h2>Bravo, c'est terminé !</h2>
+    <p class="muted" id="phone-p">Une dernière information avant d'afficher votre profil : votre numéro de téléphone, pour qu'une conseillère puisse vous présenter les formations adaptées à votre profil.</p>
+    <form id="phone-form" novalidate>
+      <label>Téléphone<input id="f-phone" type="tel" autocomplete="tel"></label>
+      <p class="err" id="p-err"></p>
+      <div class="row end"><button class="btn" type="submit">Voir mon profil</button></div>
+    </form>
+  </section>
+
+  <section class="card" id="s-result" hidden>
+    <div class="dom">
+      <p class="eyebrow">Votre profil dominant</p>
+      <h1 id="r-name"></h1>
+      <p class="sub" id="r-sub"></p>
+      <p id="r-desc"></p>
+    </div>
+    <div class="bars" id="r-bars" aria-label="Vos 8 scores, sur 9"></div>
+    <p class="muted" style="font-size:14px">Chaque score va de 0 à 9 : le nombre d'affirmations de cette famille auxquelles vous avez répondu oui.</p>
+    <div class="saved" id="r-saved" hidden></div>
+  </section>
+
+  <section class="card" id="s-learn" hidden>
+    <h3>Pour mieux apprendre l'anglais</h3>
+    <ul class="tips" id="r-learn"></ul>
+  </section>
+
+  <section class="card" id="s-teacher" hidden>
+    <h3>Comment votre formateur s'adapte à vous</h3>
+    <p class="muted" style="font-size:15px">Votre profil est transmis à votre formateur avant votre première séance. Voici ce qu'il fera pour vous.</p>
+    <ul class="tips teacher" id="r-teacher"></ul>
+  </section>
+
+  <section class="card" id="s-others" hidden>
+    <h3>Vos autres points forts</h3>
+    <div class="others" id="r-others"></div>
+    <div class="row" style="padding-top:6px">
+      <a class="btn" id="r-rdv" href="#" target="_blank" rel="noopener">Parler de mon profil avec une conseillère</a>
+    </div>
+    <p class="note">Ce profil décrit vos préférences d'apprentissage, pas vos capacités : tout le monde peut apprendre l'anglais, quel que soit son profil. Nos formations sont certifiées Qualiopi et éligibles au <a href="https://english4french.com/tarifs-cpf" target="_blank" rel="noopener">CPF, aux OPCO et à France Travail</a>.</p>
+  </section>
+</div></div>
+<script>
+(function(){
+// ===== CONFIGURATION =====
+// Envoi du résultat au CRM : URL d'un relais (serveur Leyla ou fonction Zoho CRM) qui reçoit un JSON.
+// Vide = aucun envoi (aperçu).
+const RESULT_URL = "https://leyla-bot-a04l.onrender.com/profiling"; // relais du serveur Leyla vers Zoho CRM (la clé API n'est pas dans la page)
+const BOOKING = {
+  default: "https://english4french.zohobookings.eu/272832000000118008",
+  "L'Isle-sur-la-Sorgue": "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1afbfwpzbOZDsHUvGYYj2exb3EdJQlvE4U-Y1p3VgNZ35nJxUphjwRfyBHnPw6rma4Q4VIE_YY",
+};
+// Valeurs de la liste « Centre souhaité (test) » du CRM
+const CRM_CENTRE = {"Saint-Rémy-de-Provence":"Saint Rémy de Provence","L'Isle-sur-la-Sorgue":"l'Isle sur la Sorgue","Paris 11e":"Paris","Sophia Antipolis":"Sophia Antipolis","100 % en ligne":"100% en ligne"};
+
+// ===== Les 72 affirmations, dans l'ordre du Typeform : 8 familles de 9 (même calcul que e4f_profiling_core) =====
+const CODES = ["VL","LM","VS","MR","KIN","INTER","INTRA","NAT"];
+const ITEMS = [
+  // VL — verbal-linguistique
+  "J'aime beaucoup raconter des histoires ou des blagues.",
+  "J'ai une assez bonne mémoire de ce que je lis ou de ce que j'entends.",
+  "J'aime lire pendant mes temps libres.",
+  "Prendre des notes m'aide à comprendre et à mémoriser.",
+  "J'aime écouter des conférences ou des exposés.",
+  "Je m'exprime avec un vocabulaire riche.",
+  "J'ai de la facilité à écrire.",
+  "J'aime les mots croisés et les jeux de lettres.",
+  "J'ai une bonne mémoire des noms de personnes, des dates, des lieux et des détails.",
+  // LM — logico-mathématique
+  "Je suis habile aux jeux de stratégie.",
+  "Avant de me décider, je pèse le pour et le contre.",
+  "Je peux passer des heures à tenter de résoudre un problème.",
+  "J'adore les énigmes et les casse-têtes qui demandent de la logique.",
+  "Je repère vite les failles dans le raisonnement des gens.",
+  "Je me pose beaucoup de questions sur le fonctionnement des objets.",
+  "Le fait d'être structuré(e) contribue au succès de ce que j'entreprends.",
+  "Les démarches scientifiques et expérimentales m'intéressent.",
+  "Je compte rapidement dans ma tête.",
+  // VS — visuel-spatial
+  "Je m'oriente facilement dans une ville que je ne connais pas.",
+  "J'aime regarder des films et des photos.",
+  "Quand je pense à réaménager une pièce, je la vois facilement dans ma tête.",
+  "Je reconnais facilement une figure géométrique qui a tourné dans l'espace.",
+  "Je vois des images dans ma tête quand je pense à quelque chose.",
+  "Je lis des cartes, des tableaux et des diagrammes sans difficulté.",
+  "Je tiens ma maison ou mon bureau en ordre : une place pour chaque chose.",
+  "Dans un livre illustré, je regarde d'abord les illustrations.",
+  "J'apprécie les arts : peinture, sculpture…",
+  // MR — musical-rythmique
+  "Je suis sensible aux bruits et aux sons.",
+  "Je me rappelle facilement les mélodies que j'entends.",
+  "J'ai du mal à me concentrer quand la radio ou la télévision est allumée.",
+  "J'aime les concerts, les récitals, les comédies musicales ou l'opéra.",
+  "Je suis facilement ému(e) par une musique ou une chanson.",
+  "Je suis sensible à la musicalité de la parole, des poèmes, d'une langue étrangère.",
+  "Je peux suivre la mesure dans un morceau de musique.",
+  "J'écoute régulièrement toutes sortes de musiques.",
+  "Il m'est facile de bouger et de danser en rythme.",
+  // KIN — corporel-kinesthésique
+  "Je fais du sport ou une activité physique régulièrement.",
+  "Je parle souvent « avec les mains ».",
+  "Je suis habile de mes mains, j'aime travailler avec des outils.",
+  "Je touche volontiers les objets autour de moi, en me promenant ou devant la télévision.",
+  "J'aime créer de mes mains : dessiner, sculpter, fabriquer…",
+  "J'apprends en faisant.",
+  "J'aime monter et démonter des objets.",
+  "Je sais imiter les gestes et les manières des autres.",
+  "J'ai du mal à rester assis(e) longtemps, j'ai besoin de bouger.",
+  // INTER — interpersonnel
+  "J'offre spontanément mon aide à mes amis quand ils en ont besoin.",
+  "J'aime jouer aux cartes ou aux jeux de société.",
+  "On vient me consulter quand il y a un conflit dans un groupe.",
+  "J'aime bavarder de tout et de rien.",
+  "Je crois être une personne appréciée.",
+  "Je suis à l'écoute des sentiments des autres et j'en tiens compte.",
+  "J'organise souvent des activités dans mon entourage.",
+  "J'aime m'exprimer dans les discussions.",
+  "Je fais partie de clubs ou d'associations, sportifs ou autres.",
+  // INTRA — intrapersonnel
+  "Je suis indépendant(e) et je tiens à mes idées.",
+  "J'aime travailler seul(e) sur certains projets.",
+  "Je décide par moi-même de ce que je pense, choisis et fais.",
+  "Je réagis fortement aux opinions controversées.",
+  "J'ai besoin de savoir pourquoi je devrais faire quelque chose avant d'accepter.",
+  "J'ai confiance en moi.",
+  "Je suis entreprenant(e).",
+  "J'aime réfléchir à ma vie, à mes désirs et à mes convictions.",
+  "Je travaille bien seul(e).",
+  // NAT — naturaliste
+  "Je fais attention à l'environnement dans mes gestes quotidiens (recyclage…).",
+  "Le contact avec la nature m'apaise.",
+  "J'aime être en contact avec les animaux ou les observer dans leur milieu.",
+  "J'aime classer et ranger par catégories.",
+  "J'aime collectionner des objets, puis les classer.",
+  "J'ai la main verte.",
+  "J'aime jardiner ou m'occuper de mes plantes.",
+  "J'aime les randonnées, la pêche ou les activités de plein air.",
+  "Je travaille mieux quand les informations sont organisées, classées, rangées."
+];
+
+// ===== Les 8 profils =====
+const PROFILES = {
+  VL:{name:"Les mots", full:"Intelligence verbale et linguistique",
+    desc:"Vous pensez et retenez par les mots. Lire, écrire, raconter, jouer avec le langage : c'est par là que les idées prennent forme pour vous. Pour apprendre une langue, c'est un vrai atout.",
+    short:"Vous retenez par les mots : lire et écrire en anglais vous fera progresser.",
+    learn:["Tenez un carnet de vocabulaire, avec une phrase d'exemple en anglais pour chaque mot nouveau.","Lisez un peu chaque jour : articles courts, livres en version simplifiée, puis en version originale.","Écrivez régulièrement : le résumé de votre journée, un e-mail, quelques lignes sur un sujet qui vous plaît.","Racontez à voix haute ce que vous venez de lire : c'est le pont le plus court entre l'écrit et l'oral."],
+    teacher:["Il part de textes, d'articles et de récits pour lancer chaque séance.","Il vous fait reformuler, résumer et argumenter, pour transformer votre aisance avec les mots en aisance à l'oral.","Il vous donne du vocabulaire précis et des expressions idiomatiques à réutiliser tout de suite.","Il corrige vos écrits en détail : c'est là que vous progressez le plus vite."]},
+  LM:{name:"La logique", full:"Intelligence logico-mathématique",
+    desc:"Vous comprenez en cherchant les règles, les causes et la structure. Vous aimez qu'un savoir soit organisé et que chaque étape ait sa raison d'être.",
+    short:"Vous comprenez par les règles : la grammaire expliquée vous rassure et vous fait avancer.",
+    learn:["Cherchez la règle derrière chaque structure : pourquoi le present perfect ici, pourquoi pas d'article là.","Construisez vos propres tableaux : les temps, les verbes irréguliers, les faux amis.","Avancez par objectifs mesurables : un thème par semaine, avec un petit bilan à la fin.","Entraînez-vous d'abord sur des exercices à réponse unique, puis passez à l'oral libre."],
+    teacher:["Il vous explique le fonctionnement de la langue avant de vous faire pratiquer, avec des règles claires.","Il structure chaque séance : objectif, explication, pratique, bilan.","Il vous propose des problèmes à résoudre en anglais : études de cas, scénarios, énigmes.","Il vous montre vos progrès avec des repères précis et mesurables."]},
+  VS:{name:"Les images", full:"Intelligence visuelle et spatiale",
+    desc:"Vous pensez en images. Schémas, couleurs, cartes et vidéos vous aident à comprendre, et surtout à retenir.",
+    short:"Vous retenez par les images : séries, schémas et couleurs sont vos alliés.",
+    learn:["Associez chaque mot nouveau à une image ou à un petit dessin, plutôt qu'à sa traduction.","Utilisez des couleurs pour la grammaire : une couleur par temps, une par type de mot.","Regardez des séries et des vidéos en anglais, d'abord avec les sous-titres en anglais.","Faites des cartes mentales pour organiser le vocabulaire de chaque thème."],
+    teacher:["Il illustre ses explications avec des schémas, des frises du temps et des supports visuels.","Il part de photos, de vidéos et de documents réels pour lancer les échanges.","Il vous fait décrire, comparer et commenter des images à l'oral.","Il vous transmet ses notes de séance sous une forme claire et visuelle."]},
+  MR:{name:"Les sons", full:"Intelligence musicale et rythmique",
+    desc:"Vous êtes sensible aux sons, au rythme et à la mélodie. Vous retenez ce que vous entendez, et la musique d'une langue vous parle : un atout précieux pour l'accent et la compréhension orale.",
+    short:"Vous retenez par l'oreille : écouter et répéter vous fera progresser vite.",
+    learn:["Écoutez de l'anglais tous les jours : podcasts, chansons, radio, même en fond sonore.","Répétez des phrases en imitant exactement l'intonation de la personne qui parle.","Apprenez les paroles de chansons que vous aimez : le rythme aide la mémoire.","Enregistrez-vous et réécoutez-vous pour travailler votre accent."],
+    teacher:["Il donne une large place à l'écoute et à la prononciation : accent tonique, intonation, rythme.","Il utilise des chansons, des podcasts et des extraits audio pendant les séances.","Il vous fait répéter et jouer avec la mélodie des phrases.","Il s'appuie sur votre oreille pour corriger vos erreurs à l'oral, avant de passer par la règle écrite."]},
+  KIN:{name:"Le mouvement", full:"Intelligence corporelle et kinesthésique",
+    desc:"Vous apprenez en faisant. Vous avez besoin d'agir, de bouger, de manipuler : rester longtemps assis devant une leçon vous convient mal.",
+    short:"Vous apprenez en faisant : mises en situation et séances actives vous conviennent.",
+    learn:["Pratiquez l'anglais en agissant : une recette en anglais en cuisinant, un tutoriel en bricolant.","Préférez des séances courtes et fréquentes à une longue séance par semaine.","Révisez votre vocabulaire en marchant, à voix haute.","Jouez des situations réelles : commander, téléphoner, présenter un projet."],
+    teacher:["Il rend les séances actives : jeux de rôle, mises en situation, simulations professionnelles.","Il varie les activités pour garder le rythme et vous faire participer.","Il vous fait pratiquer tout de suite ce que vous venez de découvrir.","Il relie l'anglais à des tâches concrètes de votre quotidien ou de votre métier."]},
+  INTER:{name:"Les autres", full:"Intelligence interpersonnelle",
+    desc:"Vous apprenez au contact des autres. Échanger, discuter, comprendre les gens : c'est dans l'interaction que vous êtes le plus à l'aise, et c'est exactement ce que demande une langue vivante.",
+    short:"Vous apprenez par l'échange : la conversation est votre meilleur moteur.",
+    learn:["Parlez le plus possible : ateliers de conversation, échanges linguistiques, collègues anglophones.","Apprenez à deux ou en petit groupe, et entraînez-vous ensemble.","Choisissez des sujets de discussion qui vous intéressent vraiment.","N'attendez pas d'être parfait(e) pour parler : c'est l'échange qui vous fera progresser."],
+    teacher:["Il fait de la conversation le cœur de la séance, avec de vrais échanges.","Il vous oriente vers les ateliers collectifs, où vous échangez avec d'autres apprenants.","Il crée des situations d'échange : débats, négociations, réunions simulées.","Il travaille avec vous les codes sociaux et culturels du monde anglophone."]},
+  INTRA:{name:"Soi-même", full:"Intelligence intrapersonnelle",
+    desc:"Vous apprenez par la réflexion personnelle. Vous avez besoin de comprendre pourquoi vous apprenez, de fixer vos propres objectifs et d'avancer à votre rythme.",
+    short:"Vous avancez par la réflexion : des objectifs clairs et de l'autonomie vous motivent.",
+    learn:["Fixez-vous un objectif personnel précis : une réunion, un voyage, une certification.","Tenez un journal en anglais : vos idées, vos projets, ce que vous ressentez.","Gardez des moments de travail seul(e) et au calme, par exemple sur la plateforme e-learning.","Faites régulièrement le point sur ce que vous savez faire de nouveau."],
+    teacher:["Il définit avec vous vos objectifs personnels et explique à quoi sert chaque activité.","Il vous laisse de l'autonomie et un temps de préparation avant de prendre la parole.","Il choisit des sujets qui ont du sens pour vous : votre métier, vos projets, vos convictions.","Il fait des bilans réguliers avec vous pour mesurer vos progrès."]},
+  NAT:{name:"La nature et le classement", full:"Intelligence naturaliste",
+    desc:"Vous observez, comparez et classez. Vous aimez le concret, la nature et l'ordre : vous retenez mieux ce qui est trié et rangé par catégories.",
+    short:"Vous retenez ce qui est classé : organiser le vocabulaire par familles vous aidera.",
+    learn:["Classez le vocabulaire par familles et par thèmes, avec vos propres catégories.","Observez l'anglais autour de vous : étiquettes, notices, panneaux, documentaires.","Profitez de vos activités en plein air pour écouter des podcasts en anglais.","Comparez l'anglais et le français pour repérer les ressemblances et les différences."],
+    teacher:["Il organise le contenu en catégories claires et vous aide à trier ce que vous apprenez.","Il choisit des sujets concrets et réels : environnement, nature, voyages, terrain.","Il vous fait observer, comparer et classer des exemples avant de formuler une règle.","Il vous propose des documents authentiques liés à vos centres d'intérêt."]},
+};
+
+// ===== Calcul (identique à la fonction CRM e4f_profiling_core) =====
+function computeScores(ans){
+  const s = Object.fromEntries(CODES.map(c=>[c,0]));
+  ans.forEach((v,i)=>{ const k=Math.floor(i/9); if (k<8) s[CODES[k]] += v; });
+  return s;
+}
+// 3 plus forts ; à égalité, l'ordre des familles départage (comme dans le CRM)
+function dominantList(s){
+  const done=[], out=[];
+  for (let t=0;t<3;t++){ let best="", bs=-1; for (const c of CODES) if (!done.includes(c) && s[c]>bs){best=c;bs=s[c];} done.push(best); out.push(best); }
+  return out;
+}
+const dominantText = (s,list)=>list.map(c=>`${c} (${s[c]})`).join(" › ");
+
+// ===== Interface =====
+const $ = id=>document.getElementById(id);
+const SECTIONS = ["s-intro","s-form","s-q","s-phone","s-result","s-learn","s-teacher","s-others"];
+const show = ids=>{ for (const s of SECTIONS) $(s).hidden = !ids.includes(s); document.getElementById("e4f-prof").scrollIntoView({block:"start"}); };
+let lead=null, answers=[], queue=[], pos=0, round=1, skipped=[], timer=null, deadline=0;
+const LIMIT=7000; // 7 secondes par affirmation au premier passage
+
+$("b-start").onclick = ()=>{ show(["s-form"]); $("f-first").focus(); };
+document.querySelectorAll('input[name="interest"]').forEach(r=>r.addEventListener("change",()=>{
+  $("site-wrap").hidden = r.value==="Pour le plaisir" && r.checked;
+}));
+
+$("lead").addEventListener("submit", e=>{
+  e.preventDefault();
+  const interest=(document.querySelector('input[name="interest"]:checked')||{}).value||"";
+  const site=(document.querySelector('input[name="site"]:checked')||{}).value||"";
+  lead={first:$("f-first").value.trim(), last:$("f-last").value.trim(), email:$("f-email").value.trim(), interest, site};
+  if (!lead.first||!lead.last) return $("f-err").textContent="Merci d'indiquer votre prénom et votre nom.";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(lead.email)) return $("f-err").textContent="L'adresse e-mail semble incomplète.";
+  if (!interest) return $("f-err").textContent="Merci d'indiquer si une formation vous intéresse.";
+  if (interest!=="Pour le plaisir" && !site) return $("f-err").textContent="Merci de choisir un lieu de formation.";
+  $("f-err").textContent="";
+  answers=Array(ITEMS.length).fill(null); queue=ITEMS.map((_,i)=>i); pos=0; round=1; skipped=[];
+  show(["s-q"]); renderQ();
+});
+
+function renderQ(){
+  const i=queue[pos];
+  $("q-text").textContent = ITEMS[i];
+  const n = answers.filter(v=>v!==null).length, pct=Math.round(n/ITEMS.length*100);
+  $("q-count").textContent = `${n} réponse${n>1?"s":""} sur ${ITEMS.length}`;
+  $("q-pct").textContent = pct+" %"; $("q-bar").style.width = pct+"%";
+  $("q-round2").hidden = round!==2; $("q-hint").hidden = round===2; $("q-timer").hidden = round===2;
+  startTimer();
+}
+function stopTimer(){ if (timer){ clearInterval(timer); timer=null; } }
+function startTimer(){
+  stopTimer(); if (round!==1) return;
+  deadline=Date.now()+LIMIT; tick(); timer=setInterval(tick,100);
+}
+function tick(){
+  const left=Math.max(0,deadline-Date.now());
+  $("q-tbar").style.transform=`scaleX(${left/LIMIT})`;
+  $("q-tsec").textContent=Math.ceil(left/1000)+" s";
+  if (left<=0){ skipped.push(queue[pos]); advance(); }
+}
+// Onglet masqué : on suspend, puis on redonne 7 secondes à l'affirmation en cours.
+document.addEventListener("visibilitychange",()=>{ if ($("s-q").hidden) return; if (document.hidden) stopTimer(); else startTimer(); });
+function advance(){
+  stopTimer(); pos++;
+  if (pos<queue.length) return renderQ();
+  if (skipped.length){ queue=skipped; skipped=[]; pos=0; round=2; return renderQ(); }
+  const optional = lead.interest==="Pour le plaisir";
+  $("phone-p").textContent = optional
+    ? "Votre profil est prêt. Si vous le souhaitez, laissez votre numéro : une conseillère pourra vous en parler. Ce champ est facultatif."
+    : "Une dernière information avant d'afficher votre profil : votre numéro de téléphone, pour qu'une conseillère puisse vous présenter les formations adaptées à votre profil.";
+  show(["s-phone"]); $("f-phone").focus();
+}
+function reply(v){ if ($("s-q").hidden) return; answers[queue[pos]]=v; advance(); }
+$("b-yes").onclick=()=>reply(1);
+$("b-no").onclick=()=>reply(0);
+document.addEventListener("keydown", e=>{
+  if ($("s-q").hidden || e.metaKey || e.ctrlKey || e.altKey || e.repeat) return;
+  const k=e.key.toLowerCase();
+  if (k==="o"||k==="y") reply(1); else if (k==="n") reply(0);
+});
+
+$("phone-form").addEventListener("submit", e=>{
+  e.preventDefault();
+  const phone=$("f-phone").value.trim(), optional=lead.interest==="Pour le plaisir";
+  if (!(optional && !phone) && phone.replace(/\D/g,"").length<9) return $("p-err").textContent="Le numéro de téléphone semble incomplet.";
+  $("p-err").textContent=""; lead.phone=phone; renderResult();
+});
+
+function el(tag, text, cls){ const n=document.createElement(tag); if (cls) n.className=cls; if (text!=null) n.textContent=text; return n; }
+
+function renderResult(){
+  const s=computeScores(answers), top=dominantList(s), P0=PROFILES[top[0]];
+  $("r-name").textContent = P0.name;
+  const tie = CODES.filter(c=>s[c]===s[top[0]]).length>1;
+  $("r-sub").textContent = `${P0.full} · ${s[top[0]]} sur 9` + (tie ? " · à égalité avec une autre famille" : "");
+  $("r-desc").textContent = P0.desc;
+  const bars=$("r-bars"); bars.innerHTML="";
+  [...CODES].sort((a,b)=>s[b]-s[a] || CODES.indexOf(a)-CODES.indexOf(b)).forEach(c=>{
+    const row=el("div",null,"bar"+(top.includes(c)?" top":""));
+    row.appendChild(el("span",PROFILES[c].name));
+    const i=el("i"); const b=el("b"); b.style.width=(s[c]/9*100)+"%"; i.appendChild(b); row.appendChild(i);
+    row.appendChild(el("em",String(s[c]))); bars.appendChild(row);
+  });
+  const fill=(id,list)=>{ const ul=$(id); ul.innerHTML=""; list.forEach(t=>ul.appendChild(el("li",t))); };
+  fill("r-learn",P0.learn); fill("r-teacher",P0.teacher);
+  const oth=$("r-others"); oth.innerHTML="";
+  top.slice(1).forEach(c=>{ const d=el("div",null,"other"); d.appendChild(el("b",`${PROFILES[c].name} · ${s[c]} sur 9`)); d.appendChild(el("p",PROFILES[c].short+" "+PROFILES[c].learn[0])); oth.appendChild(d); });
+  $("r-rdv").href = BOOKING[lead.site] || BOOKING.default;
+  show(["s-result","s-learn","s-teacher","s-others"]);
+  send(s, top);
+}
+
+function send(s, top){
+  const payload={ source:"profiling-web", first:lead.first, last:lead.last, email:lead.email, phone:lead.phone||"",
+    interest:lead.interest, centre:CRM_CENTRE[lead.site]||"", date:new Date().toISOString().slice(0,10),
+    scores:s, dominant:dominantText(s,top), answers };
+  if (!RESULT_URL) return;
+  // Requête « simple » (text/plain) : pas de pré-vérification CORS ; le relais lit le JSON brut.
+  fetch(RESULT_URL,{method:"POST",headers:{"content-type":"text/plain"},body:JSON.stringify(payload)})
+    .then(r=>{ if (r.ok){ $("r-saved").textContent="Votre profil a bien été transmis à notre équipe."; $("r-saved").hidden=false; } })
+    .catch(()=>{});
+}
+})();
+</script>
