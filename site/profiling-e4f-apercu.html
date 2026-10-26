@@ -445,7 +445,7 @@ function renderResult(){
   const s=computeScores(answers), top=dominantList(s), P0=PROFILES[top[0]];
   $("r-name").textContent = P0.name;
   const tie = CODES.filter(c=>s[c]===s[top[0]]).length>1;
-  $("r-sub").textContent = `${P0.full} · ${s[top[0]]} sur 9` + (tie ? " · à égalité avec une autre famille" : "");
+  $("r-sub").textContent = `${P0.full} · ${s[top[0]]} sur 9` + (tie ? (CODES.filter(c=>s[c]===s[top[0]]).length>2 ? " · à égalité avec d'autres familles" : " · à égalité avec une autre famille") : "");
   $("r-desc").textContent = P0.desc;
   const bars=$("r-bars"); bars.innerHTML="";
   [...CODES].sort((a,b)=>s[b]-s[a] || CODES.indexOf(a)-CODES.indexOf(b)).forEach(c=>{
