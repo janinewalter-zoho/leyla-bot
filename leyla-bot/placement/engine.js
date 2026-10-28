@@ -40,9 +40,10 @@ export const COURSES = {
 };
 
 // Compétences « prochaine étape » quand le candidat a fait moins de 3 erreurs.
+// Clés = étiquettes de la grille de correction E4F « (QUESTIONS) Corrections TDN 90 E4F ».
 const NEXT_STEPS = {
-  A1: ["present3", "prep", "questions"], A2: ["preterit", "presperf", "futur"], B1: ["presperf", "passif", "gerinf"],
-  B2: ["pastperf", "wish", "phrasal"], C1: ["cond3", "causatif", "indirect"],
+  A1: ["present simple", "prepositions", "questions"], A2: ["past simple", "present perfect", "future forms"], B1: ["present perfect", "passive voice", "verb patterns"],
+  B2: ["past perfect", "narrative tenses", "phrasal verbs"], C1: ["third conditional", "causative verbs", "self-correction"],
 };
 
 const GRID = []; for (let t = -4; t <= 4.0001; t += 0.1) GRID.push(+t.toFixed(2));
@@ -88,7 +89,7 @@ export function answer(state, itemIndex, correct) {
   let post = state.logL.map((l, k) => Math.exp(l - m) * PRIOR[k]); const z = post.reduce((a, b) => a + b, 0); post = post.map(x => x / z);
   state.theta = GRID.reduce((s, t, k) => s + t * post[k], 0);
   state.se = Math.sqrt(GRID.reduce((s, t, k) => s + (t - state.theta) ** 2 * post[k], 0));
-  state.hist.push({ id: it.id, cat: it.cat, s: it.s, b: it.b, correct });
+  state.hist.push({ id: it.id, cat: it.cat, s: it.s, t: it.t, b: it.b, correct });
 }
 
 export const isDone = state => { const n = state.hist.length; return n >= CONFIG.MAX_Q || (n >= CONFIG.MIN_Q && state.se < CONFIG.SE_STOP); };
@@ -107,12 +108,13 @@ export function position(theta) {
 }
 export const level = theta => { let k = 0; for (const c of CONFIG.CUTS) if (theta >= c) k++; return CONFIG.LEVELS[k]; };
 
-// 3 points à améliorer : compétences ratées, d'abord celles à la portée du candidat, puis par nombre d'erreurs.
+// 3 points à améliorer : thèmes de la grille E4F ratés (thème principal = 1, secondaires = 0,5),
+// d'abord ceux à la portée du candidat, puis par poids d'erreurs.
 export function improvementPoints(state, lv) {
   const err = {};
-  for (const h of state.hist) if (!h.correct) { (err[h.s] ||= { n: 0, reach: 0 }); err[h.s].n++; if (h.b <= state.theta + 0.6) err[h.s].reach++; }
+  for (const h of state.hist) if (!h.correct) (h.t || [h.s]).forEach((tag, k) => { const w = k ? 0.5 : 1; (err[tag] ||= { n: 0, reach: 0, q: 0 }); err[tag].n += w; err[tag].q++; if (h.b <= state.theta + 0.6) err[tag].reach += w; });
   const ranked = Object.entries(err).sort((a, b) => (b[1].reach - a[1].reach) || (b[1].n - a[1].n));
-  const out = ranked.slice(0, 3).map(([k, v]) => ({ key: k, name: SKILLS[k].name, tip: SKILLS[k].tip, errors: v.n }));
+  const out = ranked.slice(0, 3).map(([k, v]) => ({ key: k, name: SKILLS[k].name, tip: SKILLS[k].tip, errors: v.q }));
   for (const k of NEXT_STEPS[lv]) { if (out.length >= 3) break; if (!out.some(p => p.key === k)) out.push({ key: k, name: SKILLS[k].name, tip: SKILLS[k].tip, errors: 0 }); }
   return out;
 }

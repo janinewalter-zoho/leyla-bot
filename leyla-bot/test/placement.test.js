@@ -15,7 +15,7 @@ test("score : bornes de niveau 25 / 40 / 55 / 70 et croissance avec theta", () =
 
 test("banque : 74 questions, chaque bonne réponse est dans les options, chaque compétence est décrite", () => {
   assert.equal(E.ITEMS.length, 74);
-  for (const it of E.ITEMS) { assert.ok(it.opts[it.ans] !== undefined, `Q${it.id}`); assert.ok(E.SKILLS[it.s], `skill ${it.s}`); }
+  for (const it of E.ITEMS) { assert.ok(it.opts[it.ans] !== undefined, `Q${it.id}`); assert.ok(E.SKILLS[it.s], `skill ${it.s}`); for (const t of it.t) assert.ok(E.SKILLS[t], `tag ${t}`); }
 });
 
 test("moteur : un candidat virtuel retrouve son niveau (ou le niveau voisin) en 18 à 22 questions", () => {
