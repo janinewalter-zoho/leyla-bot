@@ -15,10 +15,10 @@ test("score : bornes de niveau 25 / 40 / 55 / 70 et croissance avec theta", () =
 
 test("banque : 74 questions, chaque bonne réponse est dans les options, chaque compétence est décrite", () => {
   assert.equal(E.ITEMS.length, 74);
-  for (const it of E.ITEMS) { assert.ok(it.opts[it.ans] !== undefined, `Q${it.id}`); assert.ok(E.SKILLS[it.s], `skill ${it.s}`); }
+  for (const it of E.ITEMS) { assert.ok(it.opts[it.ans] !== undefined, `Q${it.id}`); assert.ok(E.SKILLS[it.s], `skill ${it.s}`); for (const t of it.t) assert.ok(E.SKILLS[t], `tag ${t}`); }
 });
 
-test("moteur : un candidat virtuel retrouve son niveau (ou le niveau voisin) en 14 à 18 questions", () => {
+test("moteur : un candidat virtuel retrouve son niveau (ou le niveau voisin) en 18 à 22 questions", () => {
   let seed = 7; const rng = () => { seed = (seed * 1103515245 + 12345) % 2 ** 31; return seed / 2 ** 31; };
   for (const theta of [-1.5, -0.75, -0.3, 0.2, 0.8, 1.5, 2.3]) {
     let same = 0, adj = 0, nq = 0; const N = 200;
@@ -29,7 +29,7 @@ test("moteur : un candidat virtuel retrouve son niveau (ou le niveau voisin) en 
       const d = Math.abs(LV.indexOf(E.level(s.theta)) - LV.indexOf(E.level(theta)));
       if (d === 0) same++; if (d <= 1) adj++;
     }
-    assert.ok(nq / N >= 14 && nq / N <= 18, `nQ ${nq / N}`);
+    assert.ok(nq / N >= 18 && nq / N <= 22, `nQ ${nq / N}`);
     assert.ok(adj / N >= 0.97, `theta ${theta} : ${adj / N} dans ±1 niveau`);
   }
 });
@@ -72,7 +72,7 @@ test("déroulé chat : coordonnées, questions, stop, résultat, parcours et RDV
   assert.ok(Date.now() - t0 < 500, "le test complet répond en moins de 500 ms");
   assert.ok(out.done && out.result);
   const r = out.result;
-  assert.ok(r.nQuestions >= 14 && r.nQuestions <= 18);
+  assert.ok(r.nQuestions >= 18 && r.nQuestions <= 22);
   assert.ok(LV.includes(r.level));
   assert.ok(r.score >= 0 && r.score <= 100 && /niveau/.test(r.position));
   assert.match(out.replies[0], /Score : \d+\/100/);

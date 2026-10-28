@@ -13,7 +13,11 @@
 "ans": 0,
 "a": 0.802,
 "b": -2.693,
-"s": "questions"
+"s": "present simple",
+"t": [
+"present simple",
+"questions"
+]
 },
 {
 "id": 3,
@@ -29,7 +33,10 @@
 "ans": 0,
 "a": 1.371,
 "b": -2.332,
-"s": "prep"
+"s": "prepositions",
+"t": [
+"prepositions"
+]
 },
 {
 "id": 16,
@@ -45,7 +52,10 @@
 "ans": 0,
 "a": 0.689,
 "b": -2.081,
-"s": "gerinf"
+"s": "verb patterns",
+"t": [
+"verb patterns"
+]
 },
 {
 "id": 1,
@@ -61,7 +71,10 @@
 "ans": 0,
 "a": 2.794,
 "b": -1.669,
-"s": "be"
+"s": "present simple",
+"t": [
+"present simple"
+]
 },
 {
 "id": 75,
@@ -77,7 +90,10 @@
 "ans": 0,
 "a": 1.726,
 "b": -1.288,
-"s": "quantite"
+"s": "vocabulary",
+"t": [
+"vocabulary"
+]
 },
 {
 "id": 5,
@@ -93,7 +109,10 @@
 "ans": 0,
 "a": 1.879,
 "b": -1.017,
-"s": "prep"
+"s": "prepositions",
+"t": [
+"prepositions"
+]
 },
 {
 "id": 11,
@@ -109,7 +128,10 @@
 "ans": 0,
 "a": 1.95,
 "b": -0.929,
-"s": "politesse"
+"s": "functional language",
+"t": [
+"functional language"
+]
 },
 {
 "id": 22,
@@ -125,7 +147,10 @@
 "ans": 0,
 "a": 1.984,
 "b": -0.877,
-"s": "liaison"
+"s": "connecting words",
+"t": [
+"connecting words"
+]
 },
 {
 "id": 4,
@@ -141,7 +166,10 @@
 "ans": 0,
 "a": 1.958,
 "b": -0.805,
-"s": "possessif"
+"s": "possessives",
+"t": [
+"possessives"
+]
 },
 {
 "id": 72,
@@ -157,7 +185,11 @@
 "ans": 0,
 "a": 1.504,
 "b": -0.749,
-"s": "articles"
+"s": "vocabulary",
+"t": [
+"vocabulary",
+"articles"
+]
 },
 {
 "id": 21,
@@ -173,7 +205,10 @@
 "ans": 0,
 "a": 2.6,
 "b": -0.718,
-"s": "reflexifs"
+"s": "reflexive pronouns",
+"t": [
+"reflexive pronouns"
+]
 },
 {
 "id": 74,
@@ -189,7 +224,10 @@
 "ans": 0,
 "a": 1.428,
 "b": -0.636,
-"s": "quantite"
+"s": "vocabulary",
+"t": [
+"vocabulary"
+]
 },
 {
 "id": 6,
@@ -205,7 +243,11 @@
 "ans": 0,
 "a": 0.957,
 "b": -0.608,
-"s": "thereis"
+"s": "present simple",
+"t": [
+"present simple",
+"quantities"
+]
 },
 {
 "id": 76,
@@ -221,7 +263,11 @@
 "ans": 0,
 "a": 2.446,
 "b": -0.589,
-"s": "infbut"
+"s": "vocabulary",
+"t": [
+"vocabulary",
+"prepositions"
+]
 },
 {
 "id": 15,
@@ -237,7 +283,10 @@
 "ans": 0,
 "a": 1.462,
 "b": -0.539,
-"s": "quantif"
+"s": "quantities",
+"t": [
+"quantities"
+]
 },
 {
 "id": 7,
@@ -253,7 +302,11 @@
 "ans": 0,
 "a": 2.207,
 "b": -0.535,
-"s": "present3"
+"s": "present simple",
+"t": [
+"present simple",
+"negatives"
+]
 },
 {
 "id": 13,
@@ -269,7 +322,10 @@
 "ans": 0,
 "a": 1.756,
 "b": -0.432,
-"s": "pastcont"
+"s": "past continuous",
+"t": [
+"past continuous"
+]
 },
 {
 "id": 40,
@@ -285,7 +341,10 @@
 "ans": 0,
 "a": 1.153,
 "b": -0.412,
-"s": "presperf"
+"s": "present perfect",
+"t": [
+"present perfect"
+]
 },
 {
 "id": 57,
@@ -301,7 +360,10 @@
 "ans": 0,
 "a": 1.655,
 "b": -0.383,
-"s": "verbesproches"
+"s": "collocations",
+"t": [
+"collocations"
+]
 },
 {
 "id": 35,
@@ -317,7 +379,10 @@
 "ans": 0,
 "a": 1.117,
 "b": -0.181,
-"s": "preterit"
+"s": "past simple",
+"t": [
+"past simple"
+]
 },
 {
 "id": 9,
@@ -333,7 +398,10 @@
 "ans": 0,
 "a": 2.214,
 "b": -0.135,
-"s": "comparatif"
+"s": "comparative",
+"t": [
+"comparative"
+]
 },
 {
 "id": 23,
@@ -349,7 +417,10 @@
 "ans": 0,
 "a": 1.464,
 "b": -0.126,
-"s": "relatifs"
+"s": "relative pronouns",
+"t": [
+"relative pronouns"
+]
 },
 {
 "id": 73,
@@ -365,7 +436,11 @@
 "ans": 0,
 "a": 1.411,
 "b": -0.085,
-"s": "liaison"
+"s": "vocabulary",
+"t": [
+"vocabulary",
+"conjunctions"
+]
 },
 {
 "id": 18,
@@ -381,7 +456,10 @@
 "ans": 0,
 "a": 1.695,
 "b": -0.081,
-"s": "modaux"
+"s": "modals of obligation",
+"t": [
+"modals of obligation"
+]
 },
 {
 "id": 24,
@@ -397,7 +475,10 @@
 "ans": 0,
 "a": 1.137,
 "b": -0.056,
-"s": "gerinf"
+"s": "verb patterns",
+"t": [
+"verb patterns"
+]
 },
 {
 "id": 19,
@@ -413,7 +494,11 @@
 "ans": 0,
 "a": 1.509,
 "b": -0.028,
-"s": "presperf"
+"s": "questions",
+"t": [
+"questions",
+"present perfect"
+]
 },
 {
 "id": 81,
@@ -428,7 +513,10 @@
 "ans": 0,
 "a": 1.202,
 "b": -0.01,
-"s": "forsince"
+"s": "self-correction",
+"t": [
+"self-correction"
+]
 },
 {
 "id": 61,
@@ -444,7 +532,12 @@
 "ans": 0,
 "a": 1.855,
 "b": 0.007,
-"s": "irreguliers"
+"s": "past simple",
+"t": [
+"past simple",
+"irregular verbs",
+"narrative tenses"
+]
 },
 {
 "id": 56,
@@ -460,7 +553,10 @@
 "ans": 0,
 "a": 1.05,
 "b": 0.028,
-"s": "futur"
+"s": "future forms",
+"t": [
+"future forms"
+]
 },
 {
 "id": 78,
@@ -476,7 +572,10 @@
 "ans": 0,
 "a": 2.01,
 "b": 0.188,
-"s": "quantite"
+"s": "vocabulary",
+"t": [
+"vocabulary"
+]
 },
 {
 "id": 77,
@@ -492,7 +591,10 @@
 "ans": 0,
 "a": 1.296,
 "b": 0.199,
-"s": "quantite"
+"s": "vocabulary",
+"t": [
+"vocabulary"
+]
 },
 {
 "id": 26,
@@ -508,7 +610,10 @@
 "ans": 0,
 "a": 1.396,
 "b": 0.205,
-"s": "passif"
+"s": "passive voice",
+"t": [
+"passive voice"
+]
 },
 {
 "id": 25,
@@ -524,7 +629,11 @@
 "ans": 0,
 "a": 1.306,
 "b": 0.225,
-"s": "indirect"
+"s": "word order",
+"t": [
+"word order",
+"negatives"
+]
 },
 {
 "id": 8,
@@ -540,7 +649,11 @@
 "ans": 0,
 "a": 1.441,
 "b": 0.231,
-"s": "adverbes"
+"s": "present simple",
+"t": [
+"present simple",
+"word order"
+]
 },
 {
 "id": 60,
@@ -556,7 +669,10 @@
 "ans": 0,
 "a": 0.932,
 "b": 0.284,
-"s": "edinging"
+"s": "adjectives",
+"t": [
+"adjectives"
+]
 },
 {
 "id": 83,
@@ -571,7 +687,11 @@
 "ans": 0,
 "a": 1.035,
 "b": 0.329,
-"s": "conditionnels"
+"s": "third conditional",
+"t": [
+"third conditional",
+"self-correction"
+]
 },
 {
 "id": 58,
@@ -587,7 +707,10 @@
 "ans": 0,
 "a": 1.212,
 "b": 0.352,
-"s": "verbesproches"
+"s": "collocations",
+"t": [
+"collocations"
+]
 },
 {
 "id": 12,
@@ -603,7 +726,10 @@
 "ans": 1,
 "a": 1.201,
 "b": 0.369,
-"s": "preterit"
+"s": "past simple",
+"t": [
+"past simple"
+]
 },
 {
 "id": 66,
@@ -619,7 +745,11 @@
 "ans": 0,
 "a": 2.112,
 "b": 0.398,
-"s": "futur"
+"s": "future forms",
+"t": [
+"future forms",
+"narrative tenses"
+]
 },
 {
 "id": 51,
@@ -635,7 +765,10 @@
 "ans": 0,
 "a": 0.837,
 "b": 0.456,
-"s": "phrasal"
+"s": "phrasal verbs",
+"t": [
+"phrasal verbs"
+]
 },
 {
 "id": 39,
@@ -651,7 +784,11 @@
 "ans": 0,
 "a": 1.996,
 "b": 0.528,
-"s": "irreguliers"
+"s": "past simple",
+"t": [
+"past simple",
+"irregular verbs"
+]
 },
 {
 "id": 14,
@@ -667,7 +804,11 @@
 "ans": 0,
 "a": 1.336,
 "b": 0.59,
-"s": "questions"
+"s": "possessives",
+"t": [
+"possessives",
+"questions"
+]
 },
 {
 "id": 43,
@@ -683,7 +824,11 @@
 "ans": 0,
 "a": 1.273,
 "b": 0.6,
-"s": "pastperf"
+"s": "past perfect",
+"t": [
+"past perfect",
+"narrative tenses"
+]
 },
 {
 "id": 87,
@@ -698,7 +843,11 @@
 "ans": 0,
 "a": 0.992,
 "b": 0.655,
-"s": "gerinf"
+"s": "verb patterns",
+"t": [
+"verb patterns",
+"self-correction"
+]
 },
 {
 "id": 20,
@@ -714,7 +863,10 @@
 "ans": 1,
 "a": 1.323,
 "b": 0.692,
-"s": "forsince"
+"s": "prepositions",
+"t": [
+"prepositions"
+]
 },
 {
 "id": 84,
@@ -729,7 +881,10 @@
 "ans": 0,
 "a": 1.36,
 "b": 0.7,
-"s": "adverbes"
+"s": "self-correction",
+"t": [
+"self-correction"
+]
 },
 {
 "id": 79,
@@ -744,7 +899,10 @@
 "ans": 0,
 "a": 0.942,
 "b": 0.715,
-"s": "sodoi"
+"s": "self-correction",
+"t": [
+"self-correction"
+]
 },
 {
 "id": 55,
@@ -760,7 +918,10 @@
 "ans": 1,
 "a": 1.363,
 "b": 0.718,
-"s": "gerinf"
+"s": "verb patterns",
+"t": [
+"verb patterns"
+]
 },
 {
 "id": 80,
@@ -775,7 +936,11 @@
 "ans": 0,
 "a": 1.1,
 "b": 0.726,
-"s": "gerinf"
+"s": "collocations",
+"t": [
+"collocations",
+"self-correction"
+]
 },
 {
 "id": 52,
@@ -791,7 +956,10 @@
 "ans": 0,
 "a": 1.307,
 "b": 0.765,
-"s": "wish"
+"s": "past perfect",
+"t": [
+"past perfect"
+]
 },
 {
 "id": 71,
@@ -807,7 +975,10 @@
 "ans": 1,
 "a": 1.779,
 "b": 0.812,
-"s": "quantite"
+"s": "vocabulary",
+"t": [
+"vocabulary"
+]
 },
 {
 "id": 17,
@@ -823,7 +994,11 @@
 "ans": 0,
 "a": 1.514,
 "b": 0.83,
-"s": "sodoi"
+"s": "word order",
+"t": [
+"word order",
+"short answer"
+]
 },
 {
 "id": 82,
@@ -838,7 +1013,11 @@
 "ans": 0,
 "a": 1.038,
 "b": 0.846,
-"s": "presperfvspret"
+"s": "present perfect",
+"t": [
+"present perfect",
+"self-correction"
+]
 },
 {
 "id": 38,
@@ -854,7 +1033,10 @@
 "ans": 0,
 "a": 1.848,
 "b": 0.851,
-"s": "preterit"
+"s": "past simple",
+"t": [
+"past simple"
+]
 },
 {
 "id": 27,
@@ -870,7 +1052,10 @@
 "ans": 1,
 "a": 1.62,
 "b": 0.969,
-"s": "causatif"
+"s": "causative verbs",
+"t": [
+"causative verbs"
+]
 },
 {
 "id": 62,
@@ -886,7 +1071,11 @@
 "ans": 0,
 "a": 2.238,
 "b": 1.065,
-"s": "pastcont"
+"s": "past continuous",
+"t": [
+"past continuous",
+"narrative tenses"
+]
 },
 {
 "id": 10,
@@ -902,7 +1091,10 @@
 "ans": 1,
 "a": 1.246,
 "b": 1.074,
-"s": "futur"
+"s": "present continuous",
+"t": [
+"present continuous"
+]
 },
 {
 "id": 85,
@@ -917,7 +1109,11 @@
 "ans": 0,
 "a": 0.781,
 "b": 1.14,
-"s": "gerinf"
+"s": "verb patterns",
+"t": [
+"verb patterns",
+"self-correction"
+]
 },
 {
 "id": 36,
@@ -933,7 +1129,10 @@
 "ans": 0,
 "a": 1.786,
 "b": 1.173,
-"s": "passif"
+"s": "passive voice",
+"t": [
+"passive voice"
+]
 },
 {
 "id": 54,
@@ -949,7 +1148,10 @@
 "ans": 1,
 "a": 0.899,
 "b": 1.188,
-"s": "letmake"
+"s": "causative verbs",
+"t": [
+"causative verbs"
+]
 },
 {
 "id": 64,
@@ -965,7 +1167,11 @@
 "ans": 0,
 "a": 0.537,
 "b": 1.263,
-"s": "present3"
+"s": "present simple",
+"t": [
+"present simple",
+"narrative tenses"
+]
 },
 {
 "id": 37,
@@ -981,7 +1187,10 @@
 "ans": 0,
 "a": 2.107,
 "b": 1.414,
-"s": "passif"
+"s": "passive voice",
+"t": [
+"passive voice"
+]
 },
 {
 "id": 59,
@@ -997,7 +1206,10 @@
 "ans": 1,
 "a": 1.19,
 "b": 1.473,
-"s": "phrasal"
+"s": "phrasal verbs",
+"t": [
+"phrasal verbs"
+]
 },
 {
 "id": 63,
@@ -1013,7 +1225,11 @@
 "ans": 0,
 "a": 1.585,
 "b": 1.623,
-"s": "presperf"
+"s": "present perfect",
+"t": [
+"present perfect",
+"narrative tenses"
+]
 },
 {
 "id": 44,
@@ -1029,7 +1245,11 @@
 "ans": 0,
 "a": 1.591,
 "b": 1.753,
-"s": "pastperf"
+"s": "past perfect",
+"t": [
+"past perfect",
+"narrative tenses"
+]
 },
 {
 "id": 68,
@@ -1045,7 +1265,10 @@
 "ans": 0,
 "a": 1.854,
 "b": 1.774,
-"s": "cond3"
+"s": "third conditional",
+"t": [
+"third conditional"
+]
 },
 {
 "id": 69,
@@ -1061,7 +1284,10 @@
 "ans": 0,
 "a": 1.703,
 "b": 1.821,
-"s": "cond3"
+"s": "third conditional",
+"t": [
+"third conditional"
+]
 },
 {
 "id": 70,
@@ -1077,7 +1303,10 @@
 "ans": 0,
 "a": 2.384,
 "b": 1.854,
-"s": "wish"
+"s": "past perfect",
+"t": [
+"past perfect"
+]
 },
 {
 "id": 53,
@@ -1093,7 +1322,10 @@
 "ans": 0,
 "a": 0.448,
 "b": 1.978,
-"s": "liaison"
+"s": "conjunctions",
+"t": [
+"conjunctions"
+]
 },
 {
 "id": 67,
@@ -1109,7 +1341,10 @@
 "ans": 0,
 "a": 1.896,
 "b": 2.016,
-"s": "wish"
+"s": "past perfect",
+"t": [
+"past perfect"
+]
 },
 {
 "id": 42,
@@ -1125,7 +1360,11 @@
 "ans": 0,
 "a": 1.509,
 "b": 2.104,
-"s": "pastperf"
+"s": "past perfect",
+"t": [
+"past perfect",
+"narrative tenses"
+]
 },
 {
 "id": 41,
@@ -1141,7 +1380,11 @@
 "ans": 0,
 "a": 1.483,
 "b": 2.501,
-"s": "presperf"
+"s": "past simple",
+"t": [
+"past simple",
+"irregular verbs"
+]
 },
 {
 "id": 86,
@@ -1156,7 +1399,11 @@
 "ans": 2,
 "a": 0.771,
 "b": 2.984,
-"s": "adverbes"
+"s": "adverbs",
+"t": [
+"adverbs",
+"self-correction"
+]
 },
 {
 "id": 65,
@@ -1172,6 +1419,10 @@
 "ans": 0,
 "a": 0.492,
 "b": 3.177,
-"s": "futur"
+"s": "future forms",
+"t": [
+"future forms",
+"narrative tenses"
+]
 }
 ]
